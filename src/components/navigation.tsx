@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 
 const navItems = [
+  { id: 'hero', labelKey: 'nav.home' },
   { id: 'about', labelKey: 'nav.about' },
   { id: 'work', labelKey: 'nav.experience' },
   { id: 'skills', labelKey: 'nav.skills' },
@@ -28,6 +29,12 @@ export function Navigation() {
       const sections = navItems.map(item => document.getElementById(item.id));
       const scrollPosition = window.scrollY + 200;
 
+      // If at the very top, set hero as active
+      if (window.scrollY < 100) {
+        setActiveSection('hero');
+        return;
+      }
+
       for (const section of sections) {
         if (section) {
           const top = section.offsetTop;
@@ -41,6 +48,7 @@ export function Navigation() {
     };
 
     window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initialize on mount
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -56,7 +64,7 @@ export function Navigation() {
     <>
       {/* Progress Bar */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-black via-gray-600 to-black z-50 origin-left"
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 z-50 origin-left shadow-lg shadow-blue-500/20"
         style={{ scaleX: scrollProgress / 100 }}
         initial={{ scaleX: 0 }}
       />
@@ -73,10 +81,10 @@ export function Navigation() {
             <button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none ${
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none ${
                 activeSection === item.id
-                  ? 'bg-black text-white'
-                  : 'text-gray-600 hover:text-black hover:bg-gray-100'
+                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
+                  : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
               }`}
             >
               {t(item.labelKey)}
@@ -88,10 +96,10 @@ export function Navigation() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        className="md:hidden fixed top-6 left-6 z-50 p-3 rounded-full bg-white border border-gray-200 shadow-lg focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none"
+        className="md:hidden fixed top-6 left-6 z-50 p-3 rounded-full bg-white border-2 border-blue-200 shadow-lg hover:border-blue-400 hover:bg-blue-50 transition-colors focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none"
         aria-label="Toggle menu"
       >
-        {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        {mobileMenuOpen ? <X className="w-5 h-5 text-blue-600" /> : <Menu className="w-5 h-5 text-blue-600" />}
       </button>
 
       {/* Mobile Menu */}
@@ -117,10 +125,10 @@ export function Navigation() {
                   <button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
-                    className={`px-4 py-3 rounded-lg text-left font-medium transition-all duration-300 min-h-[44px] focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none ${
+                    className={`px-4 py-3 rounded-lg text-left font-medium transition-all duration-300 min-h-[44px] focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none ${
                       activeSection === item.id
-                        ? 'bg-black text-white'
-                        : 'text-gray-600 hover:bg-gray-100'
+                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
+                        : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600'
                     }`}
                   >
                     {t(item.labelKey)}

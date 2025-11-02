@@ -91,13 +91,13 @@ section {
 
 /* Clean border accent */
 .border-accent {
-  border-left: 2px solid var(--color-black);
+  border-left: 2px solid var(--color-blue-600);
   padding-left: 1.5rem;
 }
 
 /* Enhanced focus visible states */
 *:focus-visible {
-  outline: 2px solid var(--color-black);
+  outline: 2px solid var(--color-blue-600);
   outline-offset: 4px;
   border-radius: 4px;
 }
@@ -120,7 +120,7 @@ section {
 
 /* Selection styling */
 ::selection {
-  background-color: var(--color-black);
+  background-color: var(--color-blue-600);
   color: var(--color-white);
 }
 
@@ -141,6 +141,16 @@ section {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-gray-600);
+}
+
+/* Hide scrollbar for horizontal scroll containers */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
 }
 
 /* Loading skeleton */
