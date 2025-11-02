@@ -23,6 +23,7 @@ export function Navigation() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const toggleLocale = () => {
     const newLocale = currentLocale === 'en' ? 'fr' : 'en';
@@ -35,6 +36,9 @@ export function Navigation() {
       const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
       const currentScroll = window.scrollY;
       setScrollProgress((currentScroll / totalScroll) * 100);
+
+      // Simple scroll detection for transparency effect
+      setScrolled(currentScroll > 50);
 
       // Detect active section
       const sections = navItems.map(item => document.getElementById(item.id));
@@ -81,28 +85,43 @@ export function Navigation() {
       />
 
       {/* Desktop Navigation */}
-      <nav className="hidden md:block fixed top-8 left-1/2 -translate-x-1/2 z-40">
-        <motion.div
-          initial={{ y: -100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex gap-1 px-2 py-2 rounded-full bg-white/80 backdrop-blur-md border border-gray-200 shadow-lg"
-        >
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => scrollToSection(item.id)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none ${
-                activeSection === item.id
-                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
-                  : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
-              }`}
-            >
-              {t(item.labelKey)}
-            </button>
-          ))}
-        </motion.div>
-      </nav>
+      <motion.nav 
+        className={`hidden md:block fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
+          scrolled 
+            ? 'bg-white/70 backdrop-blur-xl shadow-sm' 
+            : 'bg-transparent'
+        }`}
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5, ease: 'easeOut' }}
+      >
+        {/* Bottom border with smooth transition */}
+        <div 
+          className={`absolute bottom-0 left-0 right-0 h-px bg-gray-200 transition-opacity duration-500 ${
+            scrolled ? 'opacity-50' : 'opacity-0'
+          }`}
+        />
+        
+        <div className="max-w-7xl mx-auto px-6 py-2.5">
+          <div className="flex justify-center gap-1">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`px-3.5 py-1.5 rounded-full text-sm font-medium transition-all duration-300 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none ${
+                  activeSection === item.id
+                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
+                    : scrolled
+                    ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                    : 'text-gray-900 hover:text-blue-600 hover:bg-white/50'
+                }`}
+              >
+                {t(item.labelKey)}
+              </button>
+            ))}
+          </div>
+        </div>
+      </motion.nav>
 
       {/* Mobile Menu Button */}
       <button
