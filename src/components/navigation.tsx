@@ -1,9 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Languages } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
+import { useRouter } from '@/i18n/routing';
 
 const navItems = [
   { id: 'hero', labelKey: 'nav.home' },
@@ -14,9 +16,18 @@ const navItems = [
 
 export function Navigation() {
   const t = useTranslations();
+  const params = useParams();
+  const router = useRouter();
+  const currentLocale = params.locale as string;
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const toggleLocale = () => {
+    const newLocale = currentLocale === 'en' ? 'fr' : 'en';
+    router.replace('/', { locale: newLocale });
+    setMobileMenuOpen(false);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -133,6 +144,25 @@ export function Navigation() {
                     {t(item.labelKey)}
                   </button>
                 ))}
+                
+                {/* Language Switcher in Mobile Menu */}
+                <div className="mt-4 pt-4 border-t border-gray-200">
+                  <button
+                    onClick={toggleLocale}
+                    className="w-full flex items-center justify-between px-4 py-3 rounded-lg text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-all duration-300 min-h-[44px] focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none"
+                    aria-label={`Changer de langue vers ${currentLocale === 'en' ? 'Français' : 'English'}`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Languages className="w-4 h-4" aria-hidden="true" />
+                      <span className="font-medium">
+                        {currentLocale === 'en' ? 'English' : 'Français'}
+                      </span>
+                    </div>
+                    <span className="text-xs uppercase font-semibold px-2 py-1 bg-blue-50 text-blue-600 rounded">
+                      {currentLocale}
+                    </span>
+                  </button>
+                </div>
               </div>
             </motion.div>
           </motion.div>

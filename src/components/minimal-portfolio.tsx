@@ -63,7 +63,7 @@ export function MinimalPortfolio() {
     <div ref={containerRef} className="min-h-screen bg-white">
       
       {/* Hero Section */}
-      <section id="hero" className="min-h-[60vh] md:min-h-screen flex items-center justify-center px-6 md:px-12 pt-12 md:pt-0">
+      <section id="hero" className="min-h-[60vh] md:min-h-screen flex items-center justify-center px-6 md:px-12 pt-4 md:pt-0">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -486,8 +486,7 @@ export function MinimalPortfolio() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: prefersReducedMotion ? 0 : 0.4, delay: prefersReducedMotion ? 0 : idx * 0.1 }}
                   viewport={{ once: true }}
-                  whileHover={prefersReducedMotion ? {} : { y: -8, scale: 1.02 }}
-                  className={`group bg-white border-2 ${colorScheme.border} rounded-2xl p-6 hover:shadow-xl transition-all cursor-pointer`}
+                  className={`group bg-white border-2 ${colorScheme.border} rounded-2xl p-6 transition-all cursor-pointer`}
                   aria-label={`Voir le projet ${project.title}`}
                 >
                   <div className={`w-12 h-12 ${colorScheme.bgLight} rounded-xl flex items-center justify-center mb-4 ${colorScheme.bg} group-hover:scale-110 transition-transform`}>
@@ -636,7 +635,7 @@ export function MinimalPortfolio() {
                   <button
                     type="submit"
                     disabled={formStatus === 'sending'}
-                    className="w-full px-8 py-4 min-h-[44px] bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20 hover:shadow-xl hover:shadow-blue-600/30 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:outline-none inline-flex items-center justify-center gap-2"
+                    className="w-full px-8 py-4 min-h-[44px] bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20 hover:shadow-xl hover:shadow-blue-600/30 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:outline-none inline-flex items-center justify-center gap-2 cursor-pointer"
                     aria-label={formStatus === 'sending' ? t('contact.form.sending') : t('contact.form.submit')}
                   >
                     {formStatus === 'sending' ? (
