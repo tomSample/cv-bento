@@ -376,11 +376,11 @@ export function MinimalPortfolio() {
                             
                             // Palette de couleurs distinctes pour chaque mission
                             const colorSchemes = [
-                              { bg: 'bg-blue-500', text: 'text-blue-700', border: 'border-blue-200', skillBg: 'bg-blue-50', dateBg: 'bg-blue-100', hover: 'hover:bg-blue-600' },
-                              { bg: 'bg-emerald-500', text: 'text-emerald-700', border: 'border-emerald-200', skillBg: 'bg-emerald-50', dateBg: 'bg-emerald-100', hover: 'hover:bg-emerald-600' },
-                              { bg: 'bg-violet-500', text: 'text-violet-700', border: 'border-violet-200', skillBg: 'bg-violet-50', dateBg: 'bg-violet-100', hover: 'hover:bg-violet-600' },
-                              { bg: 'bg-orange-500', text: 'text-orange-700', border: 'border-orange-200', skillBg: 'bg-orange-50', dateBg: 'bg-orange-100', hover: 'hover:bg-orange-600' },
-                              { bg: 'bg-pink-500', text: 'text-pink-700', border: 'border-pink-200', skillBg: 'bg-pink-50', dateBg: 'bg-pink-100', hover: 'hover:bg-pink-600' },
+                              { bg: 'bg-blue-500', text: 'text-blue-700', border: 'border-blue-200', skillBg: 'bg-blue-50', dateBg: 'bg-blue-100', hover: 'hover:bg-blue-600', borderColor: 'border-l-blue-500', hoverBg: 'group-hover:bg-blue-500' },
+                              { bg: 'bg-emerald-500', text: 'text-emerald-700', border: 'border-emerald-200', skillBg: 'bg-emerald-50', dateBg: 'bg-emerald-100', hover: 'hover:bg-emerald-600', borderColor: 'border-l-emerald-500', hoverBg: 'group-hover:bg-emerald-500' },
+                              { bg: 'bg-violet-500', text: 'text-violet-700', border: 'border-violet-200', skillBg: 'bg-violet-50', dateBg: 'bg-violet-100', hover: 'hover:bg-violet-600', borderColor: 'border-l-violet-500', hoverBg: 'group-hover:bg-violet-500' },
+                              { bg: 'bg-orange-500', text: 'text-orange-700', border: 'border-orange-200', skillBg: 'bg-orange-50', dateBg: 'bg-orange-100', hover: 'hover:bg-orange-600', borderColor: 'border-l-orange-500', hoverBg: 'group-hover:bg-orange-500' },
+                              { bg: 'bg-pink-500', text: 'text-pink-700', border: 'border-pink-200', skillBg: 'bg-pink-50', dateBg: 'bg-pink-100', hover: 'hover:bg-pink-600', borderColor: 'border-l-pink-500', hoverBg: 'group-hover:bg-pink-500' },
                             ];
                             const colorScheme = colorSchemes[roleIndex % colorSchemes.length];
                             const isExpanded = expandedRoles[jobIndex] === roleIndex;
@@ -392,11 +392,11 @@ export function MinimalPortfolio() {
                                   className="w-full flex items-center gap-3 cursor-pointer group"
                                 >
                                   <div className="w-32 flex-shrink-0">
-                                    <div className="text-xs font-medium text-gray-700 truncate group-hover:text-gray-900 group-hover:font-bold transition-all" title={role.title}>
+                                    <div className={`text-xs font-bold text-gray-700 truncate transition-all px-2 py-1 rounded-md ${colorScheme.hoverBg} group-hover:text-white`} title={role.title}>
                                       {role.title}
                                     </div>
                                   </div>
-                                  <div className="flex-1 relative h-8 bg-gray-100 rounded-lg overflow-hidden transition-all">
+                                  <div className={`flex-1 relative h-8 bg-gray-100 rounded-lg overflow-visible transition-all border-l-4 border-l-transparent group-hover:${colorScheme.borderColor}`}>
                                     <motion.div
                                       initial={{ width: 0 }}
                                       whileInView={{ width: `${duration}%` }}
@@ -405,7 +405,7 @@ export function MinimalPortfolio() {
                                       className={`absolute h-full ${colorScheme.bg} ${colorScheme.hover} rounded-lg transition-colors`}
                                       style={{ left: `${startOffset}%` }}
                                     />
-                                    <div className="absolute inset-0 flex items-center justify-center text-xs font-medium text-white group-hover:font-bold transition-all" style={{ left: `${startOffset}%`, width: `${duration}%` }}>
+                                    <div className="absolute inset-0 flex items-center justify-center text-xs font-medium text-white transition-all" style={{ left: `${startOffset}%`, width: `${duration}%` }}>
                                       {role.start} - {role.end}
                                     </div>
                                   </div>
@@ -460,11 +460,11 @@ export function MinimalPortfolio() {
                         </div>
                         {roles.map((role: any, roleIndex: number) => {
                           const colorSchemes = [
-                            { bg: 'bg-blue-500', text: 'text-blue-700', border: 'border-blue-200', skillBg: 'bg-blue-50', dateBg: 'bg-blue-100', hover: 'hover:bg-blue-600' },
-                            { bg: 'bg-emerald-500', text: 'text-emerald-700', border: 'border-emerald-200', skillBg: 'bg-emerald-50', dateBg: 'bg-emerald-100', hover: 'hover:bg-emerald-600' },
-                            { bg: 'bg-violet-500', text: 'text-violet-700', border: 'border-violet-200', skillBg: 'bg-violet-50', dateBg: 'bg-violet-100', hover: 'hover:bg-violet-600' },
-                            { bg: 'bg-orange-500', text: 'text-orange-700', border: 'border-orange-200', skillBg: 'bg-orange-50', dateBg: 'bg-orange-100', hover: 'hover:bg-orange-600' },
-                            { bg: 'bg-pink-500', text: 'text-pink-700', border: 'border-pink-200', skillBg: 'bg-pink-50', dateBg: 'bg-pink-100', hover: 'hover:bg-pink-600' },
+                            { bg: 'bg-blue-500', text: 'text-blue-700', border: 'border-blue-200', skillBg: 'bg-blue-50', dateBg: 'bg-blue-100', hover: 'hover:bg-blue-600', borderColor: 'border-blue-500' },
+                            { bg: 'bg-emerald-500', text: 'text-emerald-700', border: 'border-emerald-200', skillBg: 'bg-emerald-50', dateBg: 'bg-emerald-100', hover: 'hover:bg-emerald-600', borderColor: 'border-emerald-500' },
+                            { bg: 'bg-violet-500', text: 'text-violet-700', border: 'border-violet-200', skillBg: 'bg-violet-50', dateBg: 'bg-violet-100', hover: 'hover:bg-violet-600', borderColor: 'border-violet-500' },
+                            { bg: 'bg-orange-500', text: 'text-orange-700', border: 'border-orange-200', skillBg: 'bg-orange-50', dateBg: 'bg-orange-100', hover: 'hover:bg-orange-600', borderColor: 'border-orange-500' },
+                            { bg: 'bg-pink-500', text: 'text-pink-700', border: 'border-pink-200', skillBg: 'bg-pink-50', dateBg: 'bg-pink-100', hover: 'hover:bg-pink-600', borderColor: 'border-pink-500' },
                           ];
                           const colorScheme = colorSchemes[roleIndex % colorSchemes.length];
                           const isExpanded = expandedRoles[jobIndex] === roleIndex;
@@ -473,7 +473,7 @@ export function MinimalPortfolio() {
                             <div key={roleIndex} className="space-y-2">
                               <button
                                 onClick={() => toggleRole(jobIndex, roleIndex)}
-                                className={`w-full text-left px-4 py-4 ${colorScheme.bg} rounded-xl ${colorScheme.hover} transition-all shadow-md min-h-[56px]`}
+                                className={`w-full text-left px-4 py-4 ${colorScheme.bg} rounded-xl transition-all shadow-md min-h-[56px] cursor-pointer border-4 border-transparent hover:${colorScheme.borderColor} ${colorScheme.hover}`}
                                 aria-expanded={isExpanded}
                                 aria-controls={`role-details-${jobIndex}-${roleIndex}`}
                               >
