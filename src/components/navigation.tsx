@@ -1,0 +1,144 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslations } from 'next-intl';
+
+const navItems = [
+  { id: 'about', labelKey: 'nav.about' },
+  { id: 'work', labelKey: 'nav.experience' },
+  { id: 'skills', labelKey: 'nav.skills' },
+  { id: 'contact', labelKey: 'nav.contact' },
+];
+
+export function Navigation() {
+  const t = useTranslations();
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [activeSection, setActiveSection] = useState('');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const currentScroll = window.scrollY;
+      setScrollProgress((currentScroll / totalScroll) * 100);
+
+      // Detect active section
+      const sections = navItems.map(item => document.getElementById(item.id));
+      const scrollPosition = window.scrollY + 200;
+
+      for (const section of sections) {
+        if (section) {
+          const top = section.offsetTop;
+          const height = section.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            setActiveSection(section.id);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setMobileMenuOpen(false);
+    }
+  };
+
+  return (
+    <>
+      {/* Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-black via-gray-600 to-black z-50 origin-left"
+        style={{ scaleX: scrollProgress / 100 }}
+        initial={{ scaleX: 0 }}
+      />
+
+      {/* Desktop Navigation */}
+      <nav className="hidden md:block fixed top-8 left-1/2 -translate-x-1/2 z-40">
+        <motion.div
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex gap-1 px-2 py-2 rounded-full bg-white/80 backdrop-blur-md border border-gray-200 shadow-lg"
+        >
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => scrollToSection(item.id)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none ${
+                activeSection === item.id
+                  ? 'bg-black text-white'
+                  : 'text-gray-600 hover:text-black hover:bg-gray-100'
+              }`}
+            >
+              {t(item.labelKey)}
+            </button>
+          ))}
+        </motion.div>
+      </nav>
+
+      {/* Mobile Menu Button */}
+      <button
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        className="md:hidden fixed top-6 left-6 z-50 p-3 rounded-full bg-white border border-gray-200 shadow-lg focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none"
+        aria-label="Toggle menu"
+      >
+        {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+      </button>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <motion.div
+              initial={{ x: -300 }}
+              animate={{ x: 0 }}
+              exit={{ x: -300 }}
+              transition={{ type: 'spring', damping: 25 }}
+              className="absolute left-0 top-0 bottom-0 w-64 bg-white shadow-2xl p-6"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex flex-col gap-2 mt-16">
+                {navItems.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className={`px-4 py-3 rounded-lg text-left font-medium transition-all duration-300 min-h-[44px] focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none ${
+                      activeSection === item.id
+                        ? 'bg-black text-white'
+                        : 'text-gray-600 hover:bg-gray-100'
+                    }`}
+                  >
+                    {t(item.labelKey)}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Skip to content link for accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-black focus:text-white focus:rounded-lg"
+      >
+        Skip to main content
+      </a>
+    </>
+  );
+}

@@ -1,11 +1,18 @@
 {
+  "nav": {
+    "about": "À propos",
+    "experience": "Expérience",
+    "skills": "Compétences",
+    "contact": "Contact"
+  },
   "hero": {
     "badge": "Disponible pour des projets",
     "name": "Jean Dupont",
     "title": "Développeur créatif créant des expériences numériques minimales et fonctionnelles",
     "cta": {
       "contact": "Me contacter",
-      "work": "Voir mes projets"
+      "work": "Voir mes projets",
+      "hire": "Embauchez-moi"
     }
   },
   "about": {

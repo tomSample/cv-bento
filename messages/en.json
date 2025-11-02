@@ -1,11 +1,18 @@
 {
+  "nav": {
+    "about": "About",
+    "experience": "Experience",
+    "skills": "Skills",
+    "contact": "Contact"
+  },
   "hero": {
     "badge": "Available for work",
     "name": "Jean Dupont",
     "title": "Creative Developer crafting minimal & functional digital experiences",
     "cta": {
       "contact": "Get in touch",
-      "work": "View work"
+      "work": "View work",
+      "hire": "Hire Me"
     }
   },
   "about": {

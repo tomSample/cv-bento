@@ -3,6 +3,9 @@
 :root {
   --background: #ffffff;
   --foreground: #000000;
+  --accent-primary: #2563eb;
+  --accent-secondary: #3b82f6;
+  --accent-hover: #1d4ed8;
 }
 
 @theme inline {
@@ -22,6 +25,18 @@
   --color-gray-600: #525252;
   --color-gray-900: #171717;
   --color-white: #ffffff;
+  
+  /* Accent Colors for Branding */
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-accent-hover: var(--accent-hover);
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -31,11 +46,24 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   scroll-behavior: smooth;
+  cursor: auto;
+  accent-color: var(--accent-primary);
+}
+
+/* Show default cursor on touch devices */
+@media (pointer: coarse) {
+  body {
+    cursor: auto;
+  }
+  
+  .custom-cursor {
+    display: none;
+  }
 }
 
 /* Smooth scroll sections */
 section {
-  scroll-margin-top: 2rem;
+  scroll-margin-top: 5rem;
 }
 
 /* Minimal underline effect */
@@ -66,3 +94,74 @@ section {
   border-left: 2px solid var(--color-black);
   padding-left: 1.5rem;
 }
+
+/* Enhanced focus visible states */
+*:focus-visible {
+  outline: 2px solid var(--color-black);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* Reduced motion support for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  body {
+    scroll-behavior: auto;
+  }
+}
+
+/* Selection styling */
+::selection {
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gray-400);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gray-600);
+}
+
+/* Loading skeleton */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.skeleton {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(
+    to right,
+    #f0f0f0 0%,
+    #e0e0e0 20%,
+    #f0f0f0 40%,
+    #f0f0f0 100%
+  );
+  background-size: 1000px 100%;
+}
+
