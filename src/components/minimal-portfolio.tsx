@@ -221,7 +221,7 @@ export function MinimalPortfolio() {
               onClick={() => scrollToSection('contact')}
               whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
               whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
-              className="px-8 py-4 min-h-[44px] bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20 hover:shadow-xl hover:shadow-blue-600/30 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:outline-none inline-flex items-center gap-2"
+              className="px-8 py-4 min-h-[44px] bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20 hover:shadow-xl hover:shadow-blue-600/30 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:outline-none inline-flex items-center gap-2 cursor-pointer"
               aria-label="Naviguer vers la section contact pour m'embaucher"
             >
               {t('hero.cta.hire')}
@@ -230,7 +230,7 @@ export function MinimalPortfolio() {
             
             <button
               onClick={() => scrollToSection('work')}
-              className="minimal-underline text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors min-h-[44px] inline-flex items-center"
+              className="minimal-underline text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors min-h-[44px] inline-flex items-center cursor-pointer"
               aria-label="Naviguer vers la section expérience"
             >
               {t('hero.cta.work')}

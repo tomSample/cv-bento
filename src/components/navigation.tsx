@@ -103,22 +103,38 @@ export function Navigation() {
         />
         
         <div className="max-w-7xl mx-auto px-6 py-2.5">
-          <div className="flex justify-center gap-1">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={`px-3.5 py-1.5 rounded-full text-sm font-medium transition-all duration-300 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none ${
-                  activeSection === item.id
-                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
-                    : scrolled
-                    ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
-                    : 'text-gray-900 hover:text-blue-600 hover:bg-white/50'
-                }`}
-              >
-                {t(item.labelKey)}
-              </button>
-            ))}
+          <div className="flex justify-between items-center">
+            {/* Navigation links - centered */}
+            <div className="flex-1 flex justify-center gap-1">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`px-3.5 py-1.5 rounded-full text-sm font-medium transition-all duration-300 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none cursor-pointer ${
+                    activeSection === item.id
+                      ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
+                      : scrolled
+                      ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                      : 'text-gray-900 hover:text-blue-600 hover:bg-white/50'
+                  }`}
+                >
+                  {t(item.labelKey)}
+                </button>
+              ))}
+            </div>
+            
+            {/* Language switcher - right aligned */}
+            <button
+              onClick={toggleLocale}
+              className={`px-3.5 py-1.5 rounded-full text-sm font-medium transition-all duration-300 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none cursor-pointer ${
+                scrolled
+                  ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                  : 'text-gray-900 hover:text-blue-600 hover:bg-white/50'
+              }`}
+              aria-label="Change language"
+            >
+              <span className="uppercase">{currentLocale === 'en' ? 'FR' : 'EN'}</span>
+            </button>
           </div>
         </div>
       </motion.nav>
@@ -126,7 +142,7 @@ export function Navigation() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        className="md:hidden fixed top-6 left-6 z-50 p-3 rounded-full bg-white border-2 border-blue-200 shadow-lg hover:border-blue-400 hover:bg-blue-50 transition-colors focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none"
+        className="md:hidden fixed top-6 left-6 z-50 p-3 rounded-full bg-white border-2 border-blue-200 shadow-lg hover:border-blue-400 hover:bg-blue-50 transition-colors focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none cursor-pointer"
         aria-label="Toggle menu"
       >
         {mobileMenuOpen ? <X className="w-5 h-5 text-blue-600" /> : <Menu className="w-5 h-5 text-blue-600" />}

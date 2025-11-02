@@ -4,7 +4,6 @@ import { getMessages } from 'next-intl/server';
 import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
-import { LanguageSwitcher } from '@/components/language-switcher';
 import { Navigation } from '@/components/navigation';
 import "../globals.css";
 
@@ -155,7 +154,6 @@ export default async function LocaleLayout({
         
         <NextIntlClientProvider messages={messages} locale={locale}>
           <Navigation />
-          <LanguageSwitcher />
           <main id="main-content">
             {children}
           </main>
