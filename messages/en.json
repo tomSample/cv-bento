@@ -137,7 +137,62 @@
   },
   "contact": {
     "title": "Let's work together",
-    "subtitle": "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision."
+    "subtitle": "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.",
+    "form": {
+      "name": "Your name",
+      "email": "Your email",
+      "message": "Your message",
+      "submit": "Send message",
+      "sending": "Sending...",
+      "success": "Message sent! I'll get back to you soon.",
+      "error": "An error occurred. Please try again or contact me directly."
+    }
+  },
+  "projects": {
+    "title": "Projects & Passions",
+    "subtitle": "What inspires me beyond work",
+    "items": [
+      {
+        "title": "Open Source",
+        "description": "Active contributor on GitHub, sharing solutions and helping the community.",
+        "tags": ["GitHub", "Community", "Sharing"],
+        "link": "https://github.com"
+      },
+      {
+        "title": "Design Systems",
+        "description": "Creating reusable component libraries to improve consistency.",
+        "tags": ["UI/UX", "Components", "Documentation"],
+        "link": "#"
+      },
+      {
+        "title": "Tech Mentoring",
+        "description": "Guiding junior developers in their skill development journey.",
+        "tags": ["Teaching", "Growth", "Community"],
+        "link": "#"
+      },
+      {
+        "title": "Tech Watch",
+        "description": "Constant exploration of new technologies and web development trends.",
+        "tags": ["Learning", "Innovation", "R&D"],
+        "link": "#"
+      }
+    ]
+  },
+  "values": {
+    "items": [
+      {
+        "quote": "Code quality over speed",
+        "author": "My philosophy"
+      },
+      {
+        "quote": "Always put the user at the center",
+        "author": "UX-first approach"
+      },
+      {
+        "quote": "Learn, share, grow together",
+        "author": "Collaborative spirit"
+      }
+    ]
   },
   "footer": {
     "copyright": "© 2024 Jean Dupont",

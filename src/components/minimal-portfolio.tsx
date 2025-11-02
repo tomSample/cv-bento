@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react';
+import { ArrowUpRight, Github, Linkedin, Mail, Send, Sparkles, Heart, Lightbulb, Users } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
@@ -9,6 +9,9 @@ export function MinimalPortfolio() {
   const t = useTranslations();
   const containerRef = useRef<HTMLDivElement>(null);
   const [expandedRoles, setExpandedRoles] = useState<{ [key: string]: number | null }>({});
+  const [formState, setFormState] = useState({ name: '', email: '', message: '' });
+  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
@@ -37,6 +40,24 @@ export function MinimalPortfolio() {
       [jobIndex]: prev[jobIndex] === roleIndex ? null : roleIndex
     }));
   };
+  
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormStatus('sending');
+    
+    // Simulation d'envoi (remplacer par vraie API)
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    setFormStatus('success');
+    setFormState({ name: '', email: '', message: '' });
+    
+    setTimeout(() => setFormStatus('idle'), 5000);
+  };
+  
+  // Détection prefers-reduced-motion
+  const prefersReducedMotion = typeof window !== 'undefined' 
+    ? window.matchMedia('(prefers-reduced-motion: reduce)').matches 
+    : false;
 
   return (
     <div ref={containerRef} className="min-h-screen bg-white">
@@ -79,17 +100,19 @@ export function MinimalPortfolio() {
           <div className="flex flex-wrap items-center gap-6">
             <motion.button
               onClick={() => scrollToSection('contact')}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
+              whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
               className="px-8 py-4 min-h-[44px] bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20 hover:shadow-xl hover:shadow-blue-600/30 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:outline-none inline-flex items-center gap-2"
+              aria-label="Naviguer vers la section contact pour m'embaucher"
             >
               {t('hero.cta.hire')}
-              <ArrowUpRight className="w-4 h-4" />
+              <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
             </motion.button>
             
             <button
               onClick={() => scrollToSection('work')}
-              className="minimal-underline text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors"
+              className="minimal-underline text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors min-h-[44px] inline-flex items-center"
+              aria-label="Naviguer vers la section expérience"
             >
               {t('hero.cta.work')}
             </button>
@@ -130,10 +153,10 @@ export function MinimalPortfolio() {
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: prefersReducedMotion ? 0 : 0.6, delay: prefersReducedMotion ? 0 : 0.2 }}
               viewport={{ once: true }}
             >
-              <div className="grid grid-cols-2 gap-6 md:gap-8">
+              <div className="grid grid-cols-2 gap-6 md:gap-8 mb-8">
                 <div className="p-4 rounded-2xl bg-gradient-to-br from-blue-50 to-white border-2 border-blue-100">
                   <div className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-blue-600">5+</div>
                   <div className="text-xs md:text-sm text-gray-600 uppercase tracking-wider">{t('about.stats.experience')}</div>
@@ -142,6 +165,24 @@ export function MinimalPortfolio() {
                   <div className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-blue-600">50+</div>
                   <div className="text-xs md:text-sm text-gray-600 uppercase tracking-wider">{t('about.stats.projects')}</div>
                 </div>
+              </div>
+              
+              {/* Values Section */}
+              <div className="space-y-4">
+                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">Mes valeurs</h3>
+                {t.raw('values.items').map((value: any, idx: number) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: prefersReducedMotion ? 0 : 0.4, delay: prefersReducedMotion ? 0 : idx * 0.1 }}
+                    viewport={{ once: true }}
+                    className="border-l-4 border-blue-500 pl-4 py-2"
+                  >
+                    <p className="text-sm md:text-base text-gray-800 italic">"{value.quote}"</p>
+                    <p className="text-xs text-gray-500 mt-1">— {value.author}</p>
+                  </motion.div>
+                ))}
               </div>
             </motion.div>
           </div>
@@ -293,8 +334,11 @@ export function MinimalPortfolio() {
                         </div>
                       </div>
                       
-                      {/* Mobile: Simple list with accordion */}
-                      <div className="md:hidden space-y-3">
+                      {/* Mobile: Timeline visuelle améliorée */}
+                      <div className="md:hidden space-y-4">
+                        <div className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-4">
+                          Timeline des missions
+                        </div>
                         {roles.map((role: any, roleIndex: number) => {
                           const colorSchemes = [
                             { bg: 'bg-blue-500', text: 'text-blue-700', border: 'border-blue-200', skillBg: 'bg-blue-50', dateBg: 'bg-blue-100', hover: 'hover:bg-blue-600' },
@@ -310,25 +354,44 @@ export function MinimalPortfolio() {
                             <div key={roleIndex} className="space-y-2">
                               <button
                                 onClick={() => toggleRole(jobIndex, roleIndex)}
-                                className={`w-full text-left px-4 py-3 ${colorScheme.bg} rounded-lg ${colorScheme.hover} transition-colors`}
+                                className={`w-full text-left px-4 py-4 ${colorScheme.bg} rounded-xl ${colorScheme.hover} transition-all shadow-md min-h-[56px]`}
+                                aria-expanded={isExpanded}
+                                aria-controls={`role-details-${jobIndex}-${roleIndex}`}
                               >
-                                <div className="flex items-center justify-between gap-3">
+                                <div className="flex items-start justify-between gap-3 mb-2">
                                   <div className="flex-1">
-                                    <div className="text-sm font-bold text-white">{role.title}</div>
+                                    <div className="text-base font-bold text-white mb-1">{role.title}</div>
+                                    <div className="flex items-center gap-2">
+                                      <span className="bg-white/30 text-white px-2 py-0.5 rounded text-xs font-semibold">
+                                        {role.start}
+                                      </span>
+                                      <span className="text-white/80 text-xs">→</span>
+                                      <span className="bg-white/30 text-white px-2 py-0.5 rounded text-xs font-semibold">
+                                        {role.end}
+                                      </span>
+                                    </div>
                                   </div>
-                                  <span className="bg-white/20 text-white px-2 py-1 rounded text-xs font-semibold whitespace-nowrap">
-                                    {role.start} - {role.end}
-                                  </span>
+                                  <motion.div
+                                    animate={{ rotate: isExpanded ? 180 : 0 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="text-white flex-shrink-0"
+                                    aria-hidden="true"
+                                  >
+                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                  </motion.div>
                                 </div>
                               </button>
                               
                               <AnimatePresence>
                                 {isExpanded && (
                                   <motion.div
+                                    id={`role-details-${jobIndex}-${roleIndex}`}
                                     initial={{ height: 0, opacity: 0 }}
                                     animate={{ height: 'auto', opacity: 1 }}
                                     exit={{ height: 0, opacity: 0 }}
-                                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                                    transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: 'easeInOut' }}
                                     className="overflow-hidden"
                                   >
                                     <div className={`bg-white border-2 ${colorScheme.border} rounded-xl p-5`}>
@@ -388,54 +451,241 @@ export function MinimalPortfolio() {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="flex items-center px-6 md:px-12 py-12 md:py-24 lg:py-32">
+      {/* Projects & Passions Section */}
+      <section id="projects" className="px-6 md:px-12 py-12 md:py-24 lg:py-32 bg-gray-50">
         <div className="max-w-6xl w-full mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.6 }}
+            viewport={{ once: true }}
+            className="mb-12 md:mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">{t('projects.title')}</h2>
+            <p className="text-lg md:text-xl text-gray-600">{t('projects.subtitle')}</p>
+          </motion.div>
+          
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            {t.raw('projects.items').map((project: any, idx: number) => {
+              const colorSchemes = [
+                { bg: 'bg-blue-500', text: 'text-blue-700', border: 'border-blue-200', bgLight: 'bg-blue-50', icon: Sparkles },
+                { bg: 'bg-emerald-500', text: 'text-emerald-700', border: 'border-emerald-200', bgLight: 'bg-emerald-50', icon: Heart },
+                { bg: 'bg-violet-500', text: 'text-violet-700', border: 'border-violet-200', bgLight: 'bg-violet-50', icon: Users },
+                { bg: 'bg-orange-500', text: 'text-orange-700', border: 'border-orange-200', bgLight: 'bg-orange-50', icon: Lightbulb },
+              ];
+              const colorScheme = colorSchemes[idx % colorSchemes.length];
+              const Icon = colorScheme.icon;
+              
+              return (
+                <motion.a
+                  key={idx}
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: prefersReducedMotion ? 0 : 0.4, delay: prefersReducedMotion ? 0 : idx * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={prefersReducedMotion ? {} : { y: -8, scale: 1.02 }}
+                  className={`group bg-white border-2 ${colorScheme.border} rounded-2xl p-6 hover:shadow-xl transition-all cursor-pointer`}
+                  aria-label={`Voir le projet ${project.title}`}
+                >
+                  <div className={`w-12 h-12 ${colorScheme.bgLight} rounded-xl flex items-center justify-center mb-4 ${colorScheme.bg} group-hover:scale-110 transition-transform`}>
+                    <Icon className={`w-6 h-6 text-white`} aria-hidden="true" />
+                  </div>
+                  
+                  <h3 className="text-xl font-bold mb-2 text-gray-900">{project.title}</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed mb-4">{project.description}</p>
+                  
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag: string, tagIdx: number) => (
+                      <span
+                        key={tagIdx}
+                        className={`px-2 py-1 ${colorScheme.bgLight} ${colorScheme.text} text-xs font-medium rounded-md`}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  <ArrowUpRight className={`w-5 h-5 ${colorScheme.text} mt-4 opacity-0 group-hover:opacity-100 transition-opacity`} aria-hidden="true" />
+                </motion.a>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="px-6 md:px-12 py-12 md:py-24 lg:py-32">
+        <div className="max-w-6xl w-full mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.6 }}
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 md:mb-12">{t('contact.title')}</h2>
             
-            <p className="text-lg md:text-xl lg:text-2xl text-gray-600 mb-10 md:mb-16 max-w-2xl">
-              {t('contact.subtitle')}
-            </p>
-            
-            <div className="space-y-4 md:space-y-6">
-              <motion.a 
-                href="mailto:jean@example.com"
-                className="group flex items-center gap-3 md:gap-4 text-lg md:text-xl lg:text-2xl font-medium hover:translate-x-2 transition-all text-gray-900 hover:text-blue-600"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Mail className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-blue-600" />
-                <span className="break-all">jean@example.com</span>
-                <ArrowUpRight className="w-5 h-5 md:w-6 md:h-6 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 text-blue-600" />
-              </motion.a>
+            <div className="grid md:grid-cols-2 gap-12 md:gap-16">
+              {/* Contact Info */}
+              <div>
+                <p className="text-lg md:text-xl text-gray-600 mb-10">
+                  {t('contact.subtitle')}
+                </p>
+                
+                <div className="space-y-4 md:space-y-6">
+                  <motion.a 
+                    href="mailto:jean@example.com"
+                    className="group flex items-center gap-3 md:gap-4 text-lg md:text-xl font-medium hover:translate-x-2 transition-all text-gray-900 hover:text-blue-600 min-h-[44px]"
+                    whileHover={prefersReducedMotion ? {} : { scale: 1.02 }}
+                    whileTap={prefersReducedMotion ? {} : { scale: 0.98 }}
+                    aria-label="Envoyer un email à jean@example.com"
+                  >
+                    <Mail className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-blue-600" aria-hidden="true" />
+                    <span className="break-all">jean@example.com</span>
+                    <ArrowUpRight className="w-5 h-5 md:w-6 md:h-6 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 text-blue-600" aria-hidden="true" />
+                  </motion.a>
+                  
+                  <motion.a 
+                    href="https://github.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center gap-3 md:gap-4 text-lg md:text-xl font-medium hover:translate-x-2 transition-all text-gray-900 hover:text-blue-600 min-h-[44px]"
+                    whileHover={prefersReducedMotion ? {} : { scale: 1.02 }}
+                    whileTap={prefersReducedMotion ? {} : { scale: 0.98 }}
+                    aria-label="Visiter mon profil GitHub"
+                  >
+                    <Github className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-blue-600" aria-hidden="true" />
+                    <span>GitHub</span>
+                    <ArrowUpRight className="w-5 h-5 md:w-6 md:h-6 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 text-blue-600" aria-hidden="true" />
+                  </motion.a>
+                  
+                  <motion.a 
+                    href="https://linkedin.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center gap-3 md:gap-4 text-lg md:text-xl font-medium hover:translate-x-2 transition-all text-gray-900 hover:text-blue-600 min-h-[44px]"
+                    whileHover={prefersReducedMotion ? {} : { scale: 1.02 }}
+                    whileTap={prefersReducedMotion ? {} : { scale: 0.98 }}
+                    aria-label="Visiter mon profil LinkedIn"
+                  >
+                    <Linkedin className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-blue-600" aria-hidden="true" />
+                    <span>LinkedIn</span>
+                    <ArrowUpRight className="w-5 h-5 md:w-6 md:h-6 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 text-blue-600" aria-hidden="true" />
+                  </motion.a>
+                </div>
+              </div>
               
-              <motion.a 
-                href="https://github.com"
-                className="group flex items-center gap-3 md:gap-4 text-lg md:text-xl lg:text-2xl font-medium hover:translate-x-2 transition-all text-gray-900 hover:text-blue-600"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+              {/* Contact Form */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: prefersReducedMotion ? 0 : 0.6, delay: prefersReducedMotion ? 0 : 0.2 }}
+                viewport={{ once: true }}
               >
-                <Github className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-blue-600" />
-                <span>GitHub</span>
-                <ArrowUpRight className="w-5 h-5 md:w-6 md:h-6 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 text-blue-600" />
-              </motion.a>
-              
-              <motion.a 
-                href="https://linkedin.com"
-                className="group flex items-center gap-3 md:gap-4 text-lg md:text-xl lg:text-2xl font-medium hover:translate-x-2 transition-all text-gray-900 hover:text-blue-600"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Linkedin className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-blue-600" />
-                <span>LinkedIn</span>
-                <ArrowUpRight className="w-5 h-5 md:w-6 md:h-6 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 text-blue-600" />
-              </motion.a>
+                <form onSubmit={handleSubmit} className="space-y-6" aria-label="Formulaire de contact">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                      {t('contact.form.name')}
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      value={formState.name}
+                      onChange={(e) => setFormState(prev => ({ ...prev, name: e.target.value }))}
+                      className="w-full px-4 py-3 min-h-[44px] border-2 border-gray-200 rounded-lg focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 transition-colors"
+                      aria-required="true"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                      {t('contact.form.email')}
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      value={formState.email}
+                      onChange={(e) => setFormState(prev => ({ ...prev, email: e.target.value }))}
+                      className="w-full px-4 py-3 min-h-[44px] border-2 border-gray-200 rounded-lg focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 transition-colors"
+                      aria-required="true"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                      {t('contact.form.message')}
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      required
+                      rows={5}
+                      value={formState.message}
+                      onChange={(e) => setFormState(prev => ({ ...prev, message: e.target.value }))}
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 transition-colors resize-none"
+                      aria-required="true"
+                    />
+                  </div>
+                  
+                  <button
+                    type="submit"
+                    disabled={formStatus === 'sending'}
+                    className="w-full px-8 py-4 min-h-[44px] bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20 hover:shadow-xl hover:shadow-blue-600/30 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:outline-none inline-flex items-center justify-center gap-2"
+                    aria-label={formStatus === 'sending' ? t('contact.form.sending') : t('contact.form.submit')}
+                  >
+                    {formStatus === 'sending' ? (
+                      <>
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                          className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                          aria-hidden="true"
+                        />
+                        {t('contact.form.sending')}
+                      </>
+                    ) : (
+                      <>
+                        {t('contact.form.submit')}
+                        <Send className="w-5 h-5" aria-hidden="true" />
+                      </>
+                    )}
+                  </button>
+                  
+                  <AnimatePresence>
+                    {formStatus === 'success' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="p-4 bg-emerald-50 border-2 border-emerald-200 rounded-lg text-emerald-700 text-sm"
+                        role="alert"
+                        aria-live="polite"
+                      >
+                        {t('contact.form.success')}
+                      </motion.div>
+                    )}
+                    
+                    {formStatus === 'error' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="p-4 bg-red-50 border-2 border-red-200 rounded-lg text-red-700 text-sm"
+                        role="alert"
+                        aria-live="polite"
+                      >
+                        {t('contact.form.error')}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </form>
+              </motion.div>
             </div>
           </motion.div>
         </div>
