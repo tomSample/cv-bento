@@ -9,7 +9,6 @@ const navItems = [
   { id: 'hero', labelKey: 'nav.home' },
   { id: 'about', labelKey: 'nav.about' },
   { id: 'work', labelKey: 'nav.experience' },
-  { id: 'skills', labelKey: 'nav.skills' },
   { id: 'contact', labelKey: 'nav.contact' },
 ];
 

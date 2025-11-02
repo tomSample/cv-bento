@@ -29,22 +29,81 @@
     "title": "Experience",
     "jobs": [
       {
-        "year": "2022 — Present",
-        "role": "Senior Developer",
+        "company": "Global Tech Solutions",
+        "location": "Paris, France",
+        "period": "2019 — Present",
+        "roles": [
+          {
+            "title": "Lead Architect",
+            "start": 2023,
+            "end": 2024,
+            "description": "Architecting and coordinating technical team on large-scale international projects.",
+            "skills": ["Architecture", "Microservices", "Kubernetes", "Leadership", "DevOps"]
+          },
+          {
+            "title": "Frontend Tech Lead",
+            "start": 2022,
+            "end": 2024,
+            "description": "Leading frontend team and implementing scalable design systems.",
+            "skills": ["React", "TypeScript", "Design System", "Storybook", "Mentoring"]
+          },
+          {
+            "title": "Senior Full Stack Developer",
+            "start": 2021,
+            "end": 2023,
+            "description": "Developing complex features and optimizing application performance.",
+            "skills": ["React", "Node.js", "PostgreSQL", "Redis", "GraphQL"]
+          },
+          {
+            "title": "Full Stack Developer",
+            "start": 2020,
+            "end": 2022,
+            "description": "Building modern web applications with complete JavaScript stack.",
+            "skills": ["JavaScript", "Vue.js", "Express", "MongoDB", "Docker"]
+          },
+          {
+            "title": "Junior Frontend Developer",
+            "start": 2019,
+            "end": 2021,
+            "description": "Implementing responsive user interfaces and learning best practices.",
+            "skills": ["HTML", "CSS", "JavaScript", "Sass", "Git"]
+          }
+        ]
+      },
+      {
         "company": "Tech Startup Inc.",
-        "description": "Leading development team, building scalable web applications, and implementing modern design systems."
+        "location": "San Francisco, CA",
+        "period": "2020 — Present",
+        "roles": [
+          {
+            "title": "Senior Developer",
+            "start": 2022,
+            "end": 2024,
+            "description": "Leading development team and implementing modern design systems.",
+            "skills": ["React", "TypeScript", "Node.js", "AWS", "Team Leadership"]
+          },
+          {
+            "title": "Full Stack Developer",
+            "start": 2020,
+            "end": 2023,
+            "description": "Building scalable web applications with React and Node.js.",
+            "skills": ["React", "Node.js", "PostgreSQL", "Docker", "GraphQL"]
+          }
+        ]
       },
       {
-        "year": "2020 — 2022",
-        "role": "Full Stack Developer",
         "company": "Digital Agency",
-        "description": "Developed 20+ client websites using React, Node.js, and modern web technologies."
-      },
-      {
-        "year": "2018 — 2020",
-        "role": "Frontend Developer",
-        "company": "Startup Company",
-        "description": "Built MVP from scratch, created responsive interfaces, and mentored junior developers."
+        "location": "New York, NY",
+        "period": "2018 — 2020",
+        "roles": [
+          {
+            "title": "Frontend Developer",
+            "start": 2018,
+            "end": 2020,
+            "description": "Created responsive interfaces and mentored junior developers.",
+            "skills": ["JavaScript", "Vue.js", "CSS", "Figma", "Mentoring"]
+          }
+        ]
       }
     ]
   },

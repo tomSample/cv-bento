@@ -1,13 +1,14 @@
 'use client';
 
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 export function MinimalPortfolio() {
   const t = useTranslations();
   const containerRef = useRef<HTMLDivElement>(null);
+  const [expandedRoles, setExpandedRoles] = useState<{ [key: string]: number | null }>({});
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
@@ -28,6 +29,13 @@ export function MinimalPortfolio() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+  };
+  
+  const toggleRole = (jobIndex: number, roleIndex: number) => {
+    setExpandedRoles(prev => ({
+      ...prev,
+      [jobIndex]: prev[jobIndex] === roleIndex ? null : roleIndex
+    }));
   };
 
   return (
@@ -153,240 +161,229 @@ export function MinimalPortfolio() {
             {t('experience.title')}
           </motion.h2>
           
-          {/* Mobile: Horizontal Scroll */}
-          <div className="md:hidden -mx-6 px-6">
-            <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide">
-              {t.raw('experience.jobs').map((job: any, index: number) => (
+          {/* Mobile & Desktop: Unified Layout */}
+          <div className="space-y-12 md:space-y-16 lg:space-y-20">
+            {t.raw('experience.jobs').map((job: any, jobIndex: number) => {
+              const roles = job.roles || [];
+              const hasMultipleRoles = roles.length > 1;
+              
+              // Calculate timeline range
+              const allYears = roles.flatMap((r: any) => [r.start, r.end]);
+              const minYear = Math.min(...allYears);
+              const maxYear = Math.max(...allYears);
+              const yearRange = maxYear - minYear || 1;
+              
+              return (
                 <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  key={jobIndex}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: jobIndex * 0.1 }}
                   viewport={{ once: true }}
-                  className="flex-shrink-0 w-[85vw] snap-start"
+                  className="bg-white md:bg-gray-50 rounded-2xl p-6 md:p-8 border-2 border-gray-100"
                 >
-                  <div className="bg-gray-50 rounded-2xl p-6 h-full border-2 border-gray-100">
-                    <div className="text-xs text-gray-500 uppercase tracking-wider font-medium mb-4">
-                      {job.year}
-                    </div>
-                    
-                    <h3 className="text-xl font-bold mb-2">
-                      {job.role}
-                    </h3>
-                    <p className="text-gray-600 font-medium mb-4">{job.company}</p>
-                    
-                    <p className="text-sm text-gray-500 leading-[1.7]">
-                      {job.description}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-            <div className="flex justify-center gap-2 mt-4">
-              {t.raw('experience.jobs').map((_: any, index: number) => (
-                <div key={index} className="w-2 h-2 rounded-full bg-blue-300 first:bg-blue-600"></div>
-              ))}
-            </div>
-          </div>
-          
-          {/* Desktop: Timeline */}
-          <div className="hidden md:block relative space-y-16 lg:space-y-24">
-            {/* Timeline line */}
-            <div className="absolute left-0 md:left-[calc(25%-0.5px)] top-0 bottom-0 w-px bg-gradient-to-b from-blue-500 via-blue-300 to-blue-100" />
-            
-            {t.raw('experience.jobs').map((job: any, index: number) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="relative"
-              >
-                {/* Timeline dot */}
-                <div className="absolute left-0 md:left-[calc(25%-6px)] top-8 w-3 h-3 rounded-full bg-blue-600 ring-4 ring-blue-100" />
-                
-                <div className="grid md:grid-cols-4 gap-6 md:gap-8">
-                  <div className="flex items-start gap-4">
-                    <div className="text-sm text-gray-500 uppercase tracking-wider font-medium">
-                      {job.year}
+                  {/* Company Header */}
+                  <div className="mb-6">
+                    <h3 className="text-2xl md:text-3xl font-bold mb-2">{job.company}</h3>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-gray-600">
+                      {job.location && <span>{job.location}</span>}
+                      <span className="hidden sm:inline text-gray-300">•</span>
+                      <span className="font-medium">{job.period}</span>
                     </div>
                   </div>
                   
-                  <div className="md:col-span-3 space-y-3 md:space-y-4 pl-6 md:pl-8">
-                    <div>
-                      <h3 className="text-xl md:text-2xl font-bold mb-2">
-                        {job.role}
-                      </h3>
-                      <p className="text-sm md:text-base text-gray-600 font-medium">{job.company}</p>
+                  {/* Multiple Roles with Timeline */}
+                  {hasMultipleRoles ? (
+                    <div className="space-y-6">
+                      {/* Timeline Visualization (Desktop Only) */}
+                      <div className="hidden md:block bg-white rounded-xl p-6 border border-gray-200">
+                        <div className="mb-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Timeline
+                        </div>
+                        
+                        {/* Year markers */}
+                        <div className="flex justify-between mb-3 text-xs text-gray-400 font-medium">
+                          {Array.from({ length: yearRange + 1 }, (_, i) => minYear + i).map(year => (
+                            <div key={year} className="flex-1 text-center">{year}</div>
+                          ))}
+                        </div>
+                        
+                        {/* Timeline bars */}
+                        <div className="space-y-3">
+                          {roles.map((role: any, roleIndex: number) => {
+                            const startOffset = ((role.start - minYear) / yearRange) * 100;
+                            const duration = ((role.end - role.start) / yearRange) * 100;
+                            
+                            // Palette de couleurs distinctes pour chaque mission
+                            const colorSchemes = [
+                              { bg: 'bg-blue-500', text: 'text-blue-700', border: 'border-blue-200', skillBg: 'bg-blue-50', dateBg: 'bg-blue-100', hover: 'hover:bg-blue-600' },
+                              { bg: 'bg-emerald-500', text: 'text-emerald-700', border: 'border-emerald-200', skillBg: 'bg-emerald-50', dateBg: 'bg-emerald-100', hover: 'hover:bg-emerald-600' },
+                              { bg: 'bg-violet-500', text: 'text-violet-700', border: 'border-violet-200', skillBg: 'bg-violet-50', dateBg: 'bg-violet-100', hover: 'hover:bg-violet-600' },
+                              { bg: 'bg-orange-500', text: 'text-orange-700', border: 'border-orange-200', skillBg: 'bg-orange-50', dateBg: 'bg-orange-100', hover: 'hover:bg-orange-600' },
+                              { bg: 'bg-pink-500', text: 'text-pink-700', border: 'border-pink-200', skillBg: 'bg-pink-50', dateBg: 'bg-pink-100', hover: 'hover:bg-pink-600' },
+                            ];
+                            const colorScheme = colorSchemes[roleIndex % colorSchemes.length];
+                            const isExpanded = expandedRoles[jobIndex] === roleIndex;
+                            
+                            return (
+                              <div key={roleIndex} className="space-y-2">
+                                <button
+                                  onClick={() => toggleRole(jobIndex, roleIndex)}
+                                  className="w-full flex items-center gap-3 cursor-pointer group"
+                                >
+                                  <div className="w-32 flex-shrink-0">
+                                    <div className="text-xs font-medium text-gray-700 truncate group-hover:text-gray-900 group-hover:font-bold transition-all" title={role.title}>
+                                      {role.title}
+                                    </div>
+                                  </div>
+                                  <div className="flex-1 relative h-8 bg-gray-100 rounded-lg overflow-hidden transition-all">
+                                    <motion.div
+                                      initial={{ width: 0 }}
+                                      whileInView={{ width: `${duration}%` }}
+                                      transition={{ duration: 0.8, delay: roleIndex * 0.1 }}
+                                      viewport={{ once: true }}
+                                      className={`absolute h-full ${colorScheme.bg} ${colorScheme.hover} rounded-lg transition-colors`}
+                                      style={{ left: `${startOffset}%` }}
+                                    />
+                                    <div className="absolute inset-0 flex items-center justify-center text-xs font-medium text-white group-hover:font-bold transition-all" style={{ left: `${startOffset}%`, width: `${duration}%` }}>
+                                      {role.start} - {role.end}
+                                    </div>
+                                  </div>
+                                </button>
+                                
+                                {/* Accordéon avec détails de la mission */}
+                                <AnimatePresence>
+                                  {isExpanded && (
+                                    <motion.div
+                                      initial={{ height: 0, opacity: 0 }}
+                                      animate={{ height: 'auto', opacity: 1 }}
+                                      exit={{ height: 0, opacity: 0 }}
+                                      transition={{ duration: 0.3, ease: 'easeInOut' }}
+                                      className="overflow-hidden"
+                                    >
+                                      <div className={`ml-[8.5rem] bg-white border-2 ${colorScheme.border} rounded-xl p-5 mt-2`}>
+                                        <div className="flex items-start justify-between gap-3 mb-3">
+                                          <h4 className="text-lg font-bold text-gray-900 flex-1">{role.title}</h4>
+                                          <span className={`${colorScheme.dateBg} ${colorScheme.text} px-2.5 py-1 rounded-md text-xs font-semibold whitespace-nowrap`}>
+                                            {role.start} - {role.end}
+                                          </span>
+                                        </div>
+                                        <p className="text-sm text-gray-600 leading-relaxed mb-4">{role.description}</p>
+                                        
+                                        {/* Skills tags */}
+                                        {role.skills && role.skills.length > 0 && (
+                                          <div className="flex flex-wrap gap-2 pt-3 border-t border-gray-100">
+                                            {role.skills.map((skill: string, skillIdx: number) => (
+                                              <span
+                                                key={skillIdx}
+                                                className={`px-2.5 py-1 ${colorScheme.skillBg} ${colorScheme.text} text-xs font-medium rounded-md border ${colorScheme.border}`}
+                                              >
+                                                {skill}
+                                              </span>
+                                            ))}
+                                          </div>
+                                        )}
+                                      </div>
+                                    </motion.div>
+                                  )}
+                                </AnimatePresence>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                      
+                      {/* Mobile: Simple list with accordion */}
+                      <div className="md:hidden space-y-3">
+                        {roles.map((role: any, roleIndex: number) => {
+                          const colorSchemes = [
+                            { bg: 'bg-blue-500', text: 'text-blue-700', border: 'border-blue-200', skillBg: 'bg-blue-50', dateBg: 'bg-blue-100', hover: 'hover:bg-blue-600' },
+                            { bg: 'bg-emerald-500', text: 'text-emerald-700', border: 'border-emerald-200', skillBg: 'bg-emerald-50', dateBg: 'bg-emerald-100', hover: 'hover:bg-emerald-600' },
+                            { bg: 'bg-violet-500', text: 'text-violet-700', border: 'border-violet-200', skillBg: 'bg-violet-50', dateBg: 'bg-violet-100', hover: 'hover:bg-violet-600' },
+                            { bg: 'bg-orange-500', text: 'text-orange-700', border: 'border-orange-200', skillBg: 'bg-orange-50', dateBg: 'bg-orange-100', hover: 'hover:bg-orange-600' },
+                            { bg: 'bg-pink-500', text: 'text-pink-700', border: 'border-pink-200', skillBg: 'bg-pink-50', dateBg: 'bg-pink-100', hover: 'hover:bg-pink-600' },
+                          ];
+                          const colorScheme = colorSchemes[roleIndex % colorSchemes.length];
+                          const isExpanded = expandedRoles[jobIndex] === roleIndex;
+                          
+                          return (
+                            <div key={roleIndex} className="space-y-2">
+                              <button
+                                onClick={() => toggleRole(jobIndex, roleIndex)}
+                                className={`w-full text-left px-4 py-3 ${colorScheme.bg} rounded-lg ${colorScheme.hover} transition-colors`}
+                              >
+                                <div className="flex items-center justify-between gap-3">
+                                  <div className="flex-1">
+                                    <div className="text-sm font-bold text-white">{role.title}</div>
+                                  </div>
+                                  <span className="bg-white/20 text-white px-2 py-1 rounded text-xs font-semibold whitespace-nowrap">
+                                    {role.start} - {role.end}
+                                  </span>
+                                </div>
+                              </button>
+                              
+                              <AnimatePresence>
+                                {isExpanded && (
+                                  <motion.div
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: 'auto', opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                                    className="overflow-hidden"
+                                  >
+                                    <div className={`bg-white border-2 ${colorScheme.border} rounded-xl p-5`}>
+                                      <p className="text-sm text-gray-600 leading-relaxed mb-4">{role.description}</p>
+                                      
+                                      {role.skills && role.skills.length > 0 && (
+                                        <div className="flex flex-wrap gap-2 pt-3 border-t border-gray-100">
+                                          {role.skills.map((skill: string, skillIdx: number) => (
+                                            <span
+                                              key={skillIdx}
+                                              className={`px-2.5 py-1 ${colorScheme.skillBg} ${colorScheme.text} text-xs font-medium rounded-md border ${colorScheme.border}`}
+                                            >
+                                              {skill}
+                                            </span>
+                                          ))}
+                                        </div>
+                                      )}
+                                    </div>
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                    
-                    <p className="text-sm md:text-base text-gray-500 leading-[1.7]">
-                      {job.description}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Skills Section */}
-      <section id="skills" className="py-12 md:py-24 lg:py-32 bg-gray-50">
-        <div className="max-w-6xl w-full mx-auto">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 md:mb-16 lg:mb-20 leading-[1.1] tracking-tight px-6 md:px-12"
-          >
-            {t('skills.title')}
-          </motion.h2>
-          
-          {/* Mobile: Compact Grid */}
-          <div className="md:hidden px-6 space-y-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-xs uppercase tracking-[0.2em] text-blue-600 mb-4 font-medium">{t('skills.categories.frontend')}</h3>
-              <div className="flex flex-wrap gap-2">
-                {t.raw('skills.items.frontend').map((skill: string, idx: number) => (
-                  <motion.span
-                    key={idx}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.2, delay: idx * 0.03 }}
-                    viewport={{ once: true }}
-                    className="px-3 py-1.5 bg-white border-2 border-blue-200 rounded-full text-xs font-medium text-gray-900"
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
-              </div>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-xs uppercase tracking-[0.2em] text-blue-600 mb-4 font-medium">{t('skills.categories.backend')}</h3>
-              <div className="flex flex-wrap gap-2">
-                {t.raw('skills.items.backend').map((skill: string, idx: number) => (
-                  <motion.span
-                    key={idx}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.2, delay: idx * 0.03 }}
-                    viewport={{ once: true }}
-                    className="px-3 py-1.5 bg-white border-2 border-blue-200 rounded-full text-xs font-medium text-gray-900"
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
-              </div>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-xs uppercase tracking-[0.2em] text-blue-600 mb-4 font-medium">{t('skills.categories.tools')}</h3>
-              <div className="flex flex-wrap gap-2">
-                {t.raw('skills.items.tools').map((skill: string, idx: number) => (
-                  <motion.span
-                    key={idx}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.2, delay: idx * 0.03 }}
-                    viewport={{ once: true }}
-                    className="px-3 py-1.5 bg-white border-2 border-blue-200 rounded-full text-xs font-medium text-gray-900"
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-          
-          {/* Desktop: Wrapped Badges */}
-          <div className="hidden md:block px-12 space-y-12">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-sm uppercase tracking-[0.2em] text-blue-600 mb-6 font-medium">{t('skills.categories.frontend')}</h3>
-              <div className="flex flex-wrap gap-3">
-                {t.raw('skills.items.frontend').map((skill: string, idx: number) => (
-                  <motion.span
-                    key={idx}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.2, delay: idx * 0.05 }}
-                    viewport={{ once: true }}
-                    className="px-4 py-2 bg-white border-2 border-blue-200 rounded-full text-sm font-medium"
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
-              </div>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-sm uppercase tracking-[0.2em] text-blue-600 mb-6 font-medium">{t('skills.categories.backend')}</h3>
-              <div className="flex flex-wrap gap-3">
-                {t.raw('skills.items.backend').map((skill: string, idx: number) => (
-                  <motion.span
-                    key={idx}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.2, delay: idx * 0.05 }}
-                    viewport={{ once: true }}
-                    className="px-4 py-2 bg-white border-2 border-blue-200 rounded-full text-sm font-medium"
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
-              </div>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-sm uppercase tracking-[0.2em] text-blue-600 mb-6 font-medium">{t('skills.categories.tools')}</h3>
-              <div className="flex flex-wrap gap-3">
-                {t.raw('skills.items.tools').map((skill: string, idx: number) => (
-                  <motion.span
-                    key={idx}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.2, delay: idx * 0.05 }}
-                    viewport={{ once: true }}
-                    className="px-4 py-2 bg-white border-2 border-blue-200 rounded-full text-sm font-medium"
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
-              </div>
-            </motion.div>
+                  ) : (
+                    /* Single Role */
+                    <div className="border-l-4 border-blue-500 pl-6">
+                      <div className="flex items-start justify-between gap-3 mb-3">
+                        <h4 className="text-xl font-bold flex-1">{roles[0]?.title}</h4>
+                        <span className="bg-blue-100 text-blue-700 px-2.5 py-1 rounded-md text-xs font-semibold whitespace-nowrap">
+                          {roles[0]?.start} - {roles[0]?.end}
+                        </span>
+                      </div>
+                      <p className="text-gray-600 leading-relaxed mb-4">{roles[0]?.description}</p>
+                      
+                      {/* Skills tags */}
+                      {roles[0]?.skills && roles[0].skills.length > 0 && (
+                        <div className="flex flex-wrap gap-2 pt-4">
+                          {roles[0].skills.map((skill: string, skillIdx: number) => (
+                            <span
+                              key={skillIdx}
+                              className="px-2.5 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-md border border-blue-200"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
