@@ -2,19 +2,34 @@
 
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, Github, Linkedin, Mail, Send, Sparkles, Heart, Lightbulb, Users } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 
 export function MinimalPortfolio() {
   const t = useTranslations();
   const containerRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const contactRef = useRef<HTMLElement>(null);
   const [expandedRoles, setExpandedRoles] = useState<{ [key: string]: number | null }>({});
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
+  });
+
+  // Hero scroll progress
+  const { scrollYProgress: heroScrollProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+
+  // Contact scroll progress
+  const { scrollYProgress: contactScrollProgress } = useScroll({
+    target: contactRef,
+    offset: ["start end", "end end"]
   });
 
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
@@ -25,6 +40,10 @@ export function MinimalPortfolio() {
   
   // Smooth spring animation
   const smoothY = useSpring(heroY, { stiffness: 100, damping: 30 });
+
+  // Wave animations based on scroll
+  const heroWaveY = useTransform(heroScrollProgress, [0, 1], [0, 300]);
+  const contactWaveY = useTransform(contactScrollProgress, [0, 1], [-100, 100]);
 
   // Smooth scroll function
   const scrollToSection = (sectionId: string) => {
@@ -63,12 +82,103 @@ export function MinimalPortfolio() {
     <div ref={containerRef} className="min-h-screen bg-white">
       
       {/* Hero Section */}
-      <section id="hero" className="min-h-[60vh] md:min-h-screen flex items-center justify-center px-6 md:px-12 pt-4 md:pt-0">
+      <section ref={heroRef} id="hero" className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center px-6 md:px-12 pt-4 md:pt-0 overflow-hidden bg-gradient-to-b from-white to-gray-50">
+        {/* Animated Wave Background */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          {/* Wave Layer 1 - Emerald */}
+          <motion.div
+            className="absolute bottom-0 left-0 w-full h-1/2"
+            style={{ y: heroWaveY }}
+          >
+            <svg className="absolute bottom-0 left-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <motion.path
+                fill="rgba(167, 243, 208, 0.6)"
+                d="M0,160 C320,100 420,220 720,160 C1020,100 1120,220 1440,160 L1440,320 L0,320 Z"
+                initial={{ d: "M0,160 C320,100 420,220 720,160 C1020,100 1120,220 1440,160 L1440,320 L0,320 Z" }}
+                animate={{ 
+                  d: [
+                    "M0,160 C320,100 420,220 720,160 C1020,100 1120,220 1440,160 L1440,320 L0,320 Z",
+                    "M0,180 C320,120 420,240 720,180 C1020,120 1120,240 1440,180 L1440,320 L0,320 Z",
+                    "M0,160 C320,100 420,220 720,160 C1020,100 1120,220 1440,160 L1440,320 L0,320 Z"
+                  ]
+                }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </svg>
+          </motion.div>
+
+          {/* Wave Layer 2 - Violet */}
+          <motion.div
+            className="absolute bottom-0 left-0 w-full h-1/2"
+            style={{ y: useTransform(heroWaveY, (v) => v * 0.7) }}
+          >
+            <svg className="absolute bottom-0 left-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <motion.path
+                fill="rgba(221, 214, 254, 0.5)"
+                d="M0,200 C360,140 480,260 840,200 C1200,140 1320,260 1440,200 L1440,320 L0,320 Z"
+                initial={{ d: "M0,200 C360,140 480,260 840,200 C1200,140 1320,260 1440,200 L1440,320 L0,320 Z" }}
+                animate={{ 
+                  d: [
+                    "M0,200 C360,140 480,260 840,200 C1200,140 1320,260 1440,200 L1440,320 L0,320 Z",
+                    "M0,220 C360,160 480,280 840,220 C1200,160 1320,280 1440,220 L1440,320 L0,320 Z",
+                    "M0,200 C360,140 480,260 840,200 C1200,140 1320,260 1440,200 L1440,320 L0,320 Z"
+                  ]
+                }}
+                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              />
+            </svg>
+          </motion.div>
+
+          {/* Wave Layer 3 - Orange */}
+          <motion.div
+            className="absolute bottom-0 left-0 w-full h-1/2"
+            style={{ y: useTransform(heroWaveY, (v) => v * 0.5) }}
+          >
+            <svg className="absolute bottom-0 left-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <motion.path
+                fill="rgba(254, 215, 170, 0.4)"
+                d="M0,240 C400,180 500,300 900,240 C1300,180 1400,300 1440,240 L1440,320 L0,320 Z"
+                initial={{ d: "M0,240 C400,180 500,300 900,240 C1300,180 1400,300 1440,240 L1440,320 L0,320 Z" }}
+                animate={{ 
+                  d: [
+                    "M0,240 C400,180 500,300 900,240 C1300,180 1400,300 1440,240 L1440,320 L0,320 Z",
+                    "M0,250 C400,190 500,310 900,250 C1300,190 1400,310 1440,250 L1440,320 L0,320 Z",
+                    "M0,240 C400,180 500,300 900,240 C1300,180 1400,300 1440,240 L1440,320 L0,320 Z"
+                  ]
+                }}
+                transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+              />
+            </svg>
+          </motion.div>
+
+          {/* Wave Layer 4 - Pink */}
+          <motion.div
+            className="absolute bottom-0 left-0 w-full h-1/2"
+            style={{ y: useTransform(heroWaveY, (v) => v * 0.3) }}
+          >
+            <svg className="absolute bottom-0 left-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <motion.path
+                fill="rgba(251, 207, 232, 0.3)"
+                d="M0,270 C380,230 520,290 960,270 C1400,250 1440,310 1440,290 L1440,320 L0,320 Z"
+                initial={{ d: "M0,270 C380,230 520,290 960,270 C1400,250 1440,310 1440,290 L1440,320 L0,320 Z" }}
+                animate={{ 
+                  d: [
+                    "M0,270 C380,230 520,290 960,270 C1400,250 1440,310 1440,290 L1440,320 L0,320 Z",
+                    "M0,280 C380,240 520,300 960,280 C1400,260 1440,320 1440,300 L1440,320 L0,320 Z",
+                    "M0,270 C380,230 520,290 960,270 C1400,250 1440,310 1440,290 L1440,320 L0,320 Z"
+                  ]
+                }}
+                transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+              />
+            </svg>
+          </motion.div>
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-6xl w-full"
+          className="max-w-6xl w-full relative z-10"
         >
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-8 mb-6 md:mb-8">
             <motion.div
@@ -516,8 +626,99 @@ export function MinimalPortfolio() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="px-6 md:px-12 py-12 md:py-24 lg:py-32">
-        <div className="max-w-6xl w-full mx-auto">
+      <section ref={contactRef} id="contact" className="relative px-6 md:px-12 py-12 md:py-24 lg:py-32 overflow-hidden bg-gradient-to-b from-gray-50 to-white">
+        {/* Animated Wave Background for Contact */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          {/* Wave Layer 1 - Emerald */}
+          <motion.div
+            className="absolute top-0 left-0 w-full h-1/2"
+            style={{ y: contactWaveY }}
+          >
+            <svg className="absolute top-0 left-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <motion.path
+                fill="rgba(167, 243, 208, 0.6)"
+                d="M0,160 C320,100 420,220 720,160 C1020,100 1120,220 1440,160 L1440,0 L0,0 Z"
+                initial={{ d: "M0,160 C320,100 420,220 720,160 C1020,100 1120,220 1440,160 L1440,0 L0,0 Z" }}
+                animate={{ 
+                  d: [
+                    "M0,160 C320,100 420,220 720,160 C1020,100 1120,220 1440,160 L1440,0 L0,0 Z",
+                    "M0,180 C320,120 420,240 720,180 C1020,120 1120,240 1440,180 L1440,0 L0,0 Z",
+                    "M0,160 C320,100 420,220 720,160 C1020,100 1120,220 1440,160 L1440,0 L0,0 Z"
+                  ]
+                }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </svg>
+          </motion.div>
+
+          {/* Wave Layer 2 - Violet */}
+          <motion.div
+            className="absolute top-0 left-0 w-full h-1/2"
+            style={{ y: useTransform(contactWaveY, (v) => v * 0.7) }}
+          >
+            <svg className="absolute top-0 left-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <motion.path
+                fill="rgba(221, 214, 254, 0.5)"
+                d="M0,120 C360,60 480,180 840,120 C1200,60 1320,180 1440,120 L1440,0 L0,0 Z"
+                initial={{ d: "M0,120 C360,60 480,180 840,120 C1200,60 1320,180 1440,120 L1440,0 L0,0 Z" }}
+                animate={{ 
+                  d: [
+                    "M0,120 C360,60 480,180 840,120 C1200,60 1320,180 1440,120 L1440,0 L0,0 Z",
+                    "M0,140 C360,80 480,200 840,140 C1200,80 1320,200 1440,140 L1440,0 L0,0 Z",
+                    "M0,120 C360,60 480,180 840,120 C1200,60 1320,180 1440,120 L1440,0 L0,0 Z"
+                  ]
+                }}
+                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              />
+            </svg>
+          </motion.div>
+
+          {/* Wave Layer 3 - Orange */}
+          <motion.div
+            className="absolute top-0 left-0 w-full h-1/2"
+            style={{ y: useTransform(contactWaveY, (v) => v * 0.5) }}
+          >
+            <svg className="absolute top-0 left-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <motion.path
+                fill="rgba(254, 215, 170, 0.4)"
+                d="M0,80 C400,20 500,140 900,80 C1300,20 1400,140 1440,80 L1440,0 L0,0 Z"
+                initial={{ d: "M0,80 C400,20 500,140 900,80 C1300,20 1400,140 1440,80 L1440,0 L0,0 Z" }}
+                animate={{ 
+                  d: [
+                    "M0,80 C400,20 500,140 900,80 C1300,20 1400,140 1440,80 L1440,0 L0,0 Z",
+                    "M0,90 C400,30 500,150 900,90 C1300,30 1400,150 1440,90 L1440,0 L0,0 Z",
+                    "M0,80 C400,20 500,140 900,80 C1300,20 1400,140 1440,80 L1440,0 L0,0 Z"
+                  ]
+                }}
+                transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+              />
+            </svg>
+          </motion.div>
+
+          {/* Wave Layer 4 - Pink */}
+          <motion.div
+            className="absolute top-0 left-0 w-full h-1/2"
+            style={{ y: useTransform(contactWaveY, (v) => v * 0.3) }}
+          >
+            <svg className="absolute top-0 left-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <motion.path
+                fill="rgba(251, 207, 232, 0.3)"
+                d="M0,50 C380,10 520,90 960,50 C1400,10 1440,90 1440,50 L1440,0 L0,0 Z"
+                initial={{ d: "M0,50 C380,10 520,90 960,50 C1400,10 1440,90 1440,50 L1440,0 L0,0 Z" }}
+                animate={{ 
+                  d: [
+                    "M0,50 C380,10 520,90 960,50 C1400,10 1440,90 1440,50 L1440,0 L0,0 Z",
+                    "M0,60 C380,20 520,100 960,60 C1400,20 1440,100 1440,60 L1440,0 L0,0 Z",
+                    "M0,50 C380,10 520,90 960,50 C1400,10 1440,90 1440,50 L1440,0 L0,0 Z"
+                  ]
+                }}
+                transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+              />
+            </svg>
+          </motion.div>
+        </div>
+
+        <div className="max-w-6xl w-full mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
