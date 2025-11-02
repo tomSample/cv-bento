@@ -11,6 +11,7 @@ const navItems = [
   { id: 'hero', labelKey: 'nav.home' },
   { id: 'about', labelKey: 'nav.about' },
   { id: 'work', labelKey: 'nav.experience' },
+  { id: 'side', labelKey: 'nav.side' },
   { id: 'contact', labelKey: 'nav.contact' },
 ];
 

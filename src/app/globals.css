@@ -91,7 +91,11 @@ body {
 
 /* Smooth scroll sections */
 section {
-  scroll-margin-top: 5rem;
+  scroll-margin-top: -4rem;
+}
+
+section#hero {
+  scroll-margin-top: 0;
 }
 
 /* Minimal underline effect */

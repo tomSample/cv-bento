@@ -43,7 +43,16 @@ export function MinimalPortfolio() {
 
   // Wave animations based on scroll
   const heroWaveY = useTransform(heroScrollProgress, [0, 1], [0, 300]);
-  const contactWaveY = useTransform(contactScrollProgress, [0, 1], [-100, 100]);
+
+  // Mouse tracking for particles
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   // Smooth scroll function
   const scrollToSection = (sectionId: string) => {
@@ -562,7 +571,7 @@ export function MinimalPortfolio() {
       </section>
 
       {/* Projects & Passions Section */}
-      <section id="projects" className="px-6 md:px-12 py-12 md:py-24 lg:py-32 bg-gray-50">
+      <section id="side" className="px-6 md:px-12 py-12 md:py-24 lg:py-32 bg-gray-50">
         <div className="max-w-6xl w-full mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -626,96 +635,65 @@ export function MinimalPortfolio() {
       </section>
 
       {/* Contact Section */}
-      <section ref={contactRef} id="contact" className="relative px-6 md:px-12 py-12 md:py-24 lg:py-32 overflow-hidden bg-gradient-to-b from-gray-50 to-white">
-        {/* Animated Wave Background for Contact */}
-        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-          {/* Wave Layer 1 - Emerald */}
-          <motion.div
-            className="absolute top-0 left-0 w-full h-1/2"
-            style={{ y: contactWaveY }}
-          >
-            <svg className="absolute top-0 left-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
-              <motion.path
-                fill="rgba(167, 243, 208, 0.6)"
-                d="M0,160 C320,100 420,220 720,160 C1020,100 1120,220 1440,160 L1440,0 L0,0 Z"
-                initial={{ d: "M0,160 C320,100 420,220 720,160 C1020,100 1120,220 1440,160 L1440,0 L0,0 Z" }}
-                animate={{ 
-                  d: [
-                    "M0,160 C320,100 420,220 720,160 C1020,100 1120,220 1440,160 L1440,0 L0,0 Z",
-                    "M0,180 C320,120 420,240 720,180 C1020,120 1120,240 1440,180 L1440,0 L0,0 Z",
-                    "M0,160 C320,100 420,220 720,160 C1020,100 1120,220 1440,160 L1440,0 L0,0 Z"
-                  ]
+      <section ref={contactRef} id="contact" className="relative px-6 md:px-12 py-12 md:py-24 lg:py-32 overflow-hidden bg-white">
+        {/* Interactive Particles Background */}
+        <div className="absolute inset-0 -z-10 pointer-events-none" aria-hidden="true">
+          {/* Generate 60 particles */}
+          {Array.from({ length: 60 }).map((_, i) => {
+            const colors = [
+              'rgba(167, 243, 208, 0.8)', // emerald
+              'rgba(221, 214, 254, 0.8)', // violet
+              'rgba(254, 215, 170, 0.8)', // orange
+              'rgba(251, 207, 232, 0.8)'  // pink
+            ];
+            const color = colors[i % 4];
+            const size = 3 + (i % 4) * 2; // 3px, 5px, 7px, or 9px
+            const initialX = (i * 47) % 100; // Distribution pseudo-random
+            const initialY = (i * 73) % 100;
+            
+            // Calculate distance from mouse for repulsion effect
+            const particleX = (typeof window !== 'undefined' ? window.innerWidth : 1440) * (initialX / 100);
+            const particleY = (typeof window !== 'undefined' ? window.innerHeight : 800) * (initialY / 100);
+            const distanceX = mousePosition.x - particleX;
+            const distanceY = mousePosition.y - particleY;
+            const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+            const maxDistance = 200;
+            
+            let offsetX = 0;
+            let offsetY = 0;
+            
+            if (distance < maxDistance && distance > 0) {
+              const force = (maxDistance - distance) / maxDistance;
+              offsetX = -(distanceX / distance) * force * 50;
+              offsetY = -(distanceY / distance) * force * 50;
+            }
+            
+            return (
+              <motion.div
+                key={i}
+                className="absolute rounded-full"
+                style={{
+                  backgroundColor: color,
+                  width: size,
+                  height: size,
+                  left: `${initialX}%`,
+                  top: `${initialY}%`,
+                  filter: 'blur(1px)',
                 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-              />
-            </svg>
-          </motion.div>
-
-          {/* Wave Layer 2 - Violet */}
-          <motion.div
-            className="absolute top-0 left-0 w-full h-1/2"
-            style={{ y: useTransform(contactWaveY, (v) => v * 0.7) }}
-          >
-            <svg className="absolute top-0 left-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
-              <motion.path
-                fill="rgba(221, 214, 254, 0.5)"
-                d="M0,120 C360,60 480,180 840,120 C1200,60 1320,180 1440,120 L1440,0 L0,0 Z"
-                initial={{ d: "M0,120 C360,60 480,180 840,120 C1200,60 1320,180 1440,120 L1440,0 L0,0 Z" }}
-                animate={{ 
-                  d: [
-                    "M0,120 C360,60 480,180 840,120 C1200,60 1320,180 1440,120 L1440,0 L0,0 Z",
-                    "M0,140 C360,80 480,200 840,140 C1200,80 1320,200 1440,140 L1440,0 L0,0 Z",
-                    "M0,120 C360,60 480,180 840,120 C1200,60 1320,180 1440,120 L1440,0 L0,0 Z"
-                  ]
+                animate={{
+                  x: [offsetX, offsetX + (i % 2 === 0 ? 10 : -10), offsetX],
+                  y: [offsetY, offsetY + (i % 2 === 0 ? -10 : 10), offsetY],
+                  scale: [1, 1.2, 1],
                 }}
-                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              />
-            </svg>
-          </motion.div>
-
-          {/* Wave Layer 3 - Orange */}
-          <motion.div
-            className="absolute top-0 left-0 w-full h-1/2"
-            style={{ y: useTransform(contactWaveY, (v) => v * 0.5) }}
-          >
-            <svg className="absolute top-0 left-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
-              <motion.path
-                fill="rgba(254, 215, 170, 0.4)"
-                d="M0,80 C400,20 500,140 900,80 C1300,20 1400,140 1440,80 L1440,0 L0,0 Z"
-                initial={{ d: "M0,80 C400,20 500,140 900,80 C1300,20 1400,140 1440,80 L1440,0 L0,0 Z" }}
-                animate={{ 
-                  d: [
-                    "M0,80 C400,20 500,140 900,80 C1300,20 1400,140 1440,80 L1440,0 L0,0 Z",
-                    "M0,90 C400,30 500,150 900,90 C1300,30 1400,150 1440,90 L1440,0 L0,0 Z",
-                    "M0,80 C400,20 500,140 900,80 C1300,20 1400,140 1440,80 L1440,0 L0,0 Z"
-                  ]
+                transition={{
+                  duration: 3 + (i % 3),
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: i * 0.1,
                 }}
-                transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
               />
-            </svg>
-          </motion.div>
-
-          {/* Wave Layer 4 - Pink */}
-          <motion.div
-            className="absolute top-0 left-0 w-full h-1/2"
-            style={{ y: useTransform(contactWaveY, (v) => v * 0.3) }}
-          >
-            <svg className="absolute top-0 left-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
-              <motion.path
-                fill="rgba(251, 207, 232, 0.3)"
-                d="M0,50 C380,10 520,90 960,50 C1400,10 1440,90 1440,50 L1440,0 L0,0 Z"
-                initial={{ d: "M0,50 C380,10 520,90 960,50 C1400,10 1440,90 1440,50 L1440,0 L0,0 Z" }}
-                animate={{ 
-                  d: [
-                    "M0,50 C380,10 520,90 960,50 C1400,10 1440,90 1440,50 L1440,0 L0,0 Z",
-                    "M0,60 C380,20 520,100 960,60 C1400,20 1440,100 1440,60 L1440,0 L0,0 Z",
-                    "M0,50 C380,10 520,90 960,50 C1400,10 1440,90 1440,50 L1440,0 L0,0 Z"
-                  ]
-                }}
-                transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-              />
-            </svg>
-          </motion.div>
+            );
+          })}
         </div>
 
         <div className="max-w-6xl w-full mx-auto relative z-10">

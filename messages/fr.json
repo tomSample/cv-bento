@@ -3,6 +3,7 @@
     "home": "Accueil",
     "about": "À propos",
     "experience": "Expérience",
+    "side": "Side",
     "skills": "Compétences",
     "contact": "Contact"
   },
@@ -149,7 +150,7 @@
     }
   },
   "projects": {
-    "title": "Projets & Passions",
+    "title": "Side",
     "subtitle": "Ce qui m'inspire au-delà du travail",
     "items": [
       {
