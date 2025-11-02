@@ -1,0 +1,79 @@
+{
+  "hero": {
+    "badge": "Disponible pour des projets",
+    "name": "Jean Dupont",
+    "title": "Développeur créatif créant des expériences numériques minimales et fonctionnelles",
+    "cta": {
+      "contact": "Me contacter",
+      "work": "Voir mes projets"
+    }
+  },
+  "about": {
+    "title": "À propos",
+    "intro": "Je suis développeur et designer spécialisé dans la création de produits numériques propres, fonctionnels et beaux. Avec plus de 5 ans d'expérience, je me spécialise dans les technologies web modernes et la conception centrée sur l'utilisateur.",
+    "description": "Actuellement, je travaille avec React, Next.js et TypeScript pour créer des applications évolutives que les utilisateurs adorent.",
+    "stats": {
+      "experience": "Années d'expérience",
+      "projects": "Projets"
+    }
+  },
+  "experience": {
+    "title": "Expérience",
+    "jobs": [
+      {
+        "year": "2022 — Présent",
+        "role": "Développeur Senior",
+        "company": "Tech Startup Inc.",
+        "description": "Direction de l'équipe de développement, création d'applications web évolutives et mise en œuvre de systèmes de design modernes."
+      },
+      {
+        "year": "2020 — 2022",
+        "role": "Développeur Full Stack",
+        "company": "Agence Digitale",
+        "description": "Développement de plus de 20 sites clients utilisant React, Node.js et les technologies web modernes."
+      },
+      {
+        "year": "2018 — 2020",
+        "role": "Développeur Frontend",
+        "company": "Startup Company",
+        "description": "Création d'un MVP à partir de zéro, création d'interfaces réactives et mentorat de développeurs juniors."
+      }
+    ]
+  },
+  "skills": {
+    "title": "Compétences",
+    "categories": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "tools": "Outils"
+    },
+    "items": {
+      "frontend": [
+        "React & Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Framer Motion"
+      ],
+      "backend": [
+        "Node.js",
+        "PostgreSQL",
+        "GraphQL",
+        "API REST"
+      ],
+      "tools": [
+        "Git & GitHub",
+        "Figma",
+        "Docker",
+        "Vercel & AWS"
+      ]
+    }
+  },
+  "contact": {
+    "title": "Travaillons ensemble",
+    "subtitle": "Je suis toujours ouvert à discuter de nouveaux projets, d'idées créatives ou d'opportunités de faire partie de votre vision."
+  },
+  "footer": {
+    "copyright": "© 2024 Jean Dupont",
+    "built": "Créé avec Next.js & Tailwind"
+  }
+}

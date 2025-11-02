@@ -1,0 +1,79 @@
+{
+  "hero": {
+    "badge": "Available for work",
+    "name": "Jean Dupont",
+    "title": "Creative Developer crafting minimal & functional digital experiences",
+    "cta": {
+      "contact": "Get in touch",
+      "work": "View work"
+    }
+  },
+  "about": {
+    "title": "About",
+    "intro": "I'm a developer and designer focused on creating clean, functional, and beautiful digital products. With over 5 years of experience, I specialize in modern web technologies and user-centered design.",
+    "description": "Currently working with React, Next.js, and TypeScript to build scalable applications that users love.",
+    "stats": {
+      "experience": "Years Experience",
+      "projects": "Projects"
+    }
+  },
+  "experience": {
+    "title": "Experience",
+    "jobs": [
+      {
+        "year": "2022 — Present",
+        "role": "Senior Developer",
+        "company": "Tech Startup Inc.",
+        "description": "Leading development team, building scalable web applications, and implementing modern design systems."
+      },
+      {
+        "year": "2020 — 2022",
+        "role": "Full Stack Developer",
+        "company": "Digital Agency",
+        "description": "Developed 20+ client websites using React, Node.js, and modern web technologies."
+      },
+      {
+        "year": "2018 — 2020",
+        "role": "Frontend Developer",
+        "company": "Startup Company",
+        "description": "Built MVP from scratch, created responsive interfaces, and mentored junior developers."
+      }
+    ]
+  },
+  "skills": {
+    "title": "Skills",
+    "categories": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "tools": "Tools"
+    },
+    "items": {
+      "frontend": [
+        "React & Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Framer Motion"
+      ],
+      "backend": [
+        "Node.js",
+        "PostgreSQL",
+        "GraphQL",
+        "REST APIs"
+      ],
+      "tools": [
+        "Git & GitHub",
+        "Figma",
+        "Docker",
+        "Vercel & AWS"
+      ]
+    }
+  },
+  "contact": {
+    "title": "Let's work together",
+    "subtitle": "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision."
+  },
+  "footer": {
+    "copyright": "© 2024 Jean Dupont",
+    "built": "Built with Next.js & Tailwind"
+  }
+}
