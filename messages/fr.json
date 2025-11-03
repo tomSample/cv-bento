@@ -9,7 +9,7 @@
   },
   "hero": {
     "badge": "Disponible pour des projets",
-    "name": "Jean Dupont",
+    "name": "Thomas Grandjean",
     "title": "Développeur créatif créant des expériences numériques minimales et fonctionnelles",
     "cta": {
       "contact": "Me contacter",
@@ -196,7 +196,7 @@
     ]
   },
   "footer": {
-    "copyright": "© 2024 Jean Dupont",
+    "copyright": "© 2024 Thomas Grandjean",
     "built": "Créé avec Next.js & Tailwind"
   }
 }
