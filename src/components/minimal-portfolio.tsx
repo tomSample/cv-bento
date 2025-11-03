@@ -635,7 +635,94 @@ export function MinimalPortfolio() {
       </section>
 
       {/* Contact Section */}
-      <section ref={contactRef} id="contact" className="relative px-6 md:px-12 py-12 md:py-24 lg:py-32 overflow-hidden bg-white">
+      <section ref={contactRef} id="contact" className="relative px-6 md:px-12 py-12 md:py-24 lg:py-32 overflow-hidden bg-gradient-to-b from-white to-gray-50">
+        {/* Animated Wave Background */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          {/* Wave Layer 1 - Emerald */}
+          <motion.div
+            className="absolute bottom-0 left-0 w-full h-1/2"
+          >
+            <svg className="absolute bottom-0 left-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <motion.path
+                fill="rgba(167, 243, 208, 0.6)"
+                d="M0,160 C320,100 420,220 720,160 C1020,100 1120,220 1440,160 L1440,320 L0,320 Z"
+                initial={{ d: "M0,160 C320,100 420,220 720,160 C1020,100 1120,220 1440,160 L1440,320 L0,320 Z" }}
+                animate={{ 
+                  d: [
+                    "M0,160 C320,100 420,220 720,160 C1020,100 1120,220 1440,160 L1440,320 L0,320 Z",
+                    "M0,180 C320,120 420,240 720,180 C1020,120 1120,240 1440,180 L1440,320 L0,320 Z",
+                    "M0,160 C320,100 420,220 720,160 C1020,100 1120,220 1440,160 L1440,320 L0,320 Z"
+                  ]
+                }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </svg>
+          </motion.div>
+
+          {/* Wave Layer 2 - Violet */}
+          <motion.div
+            className="absolute bottom-0 left-0 w-full h-1/2"
+          >
+            <svg className="absolute bottom-0 left-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <motion.path
+                fill="rgba(221, 214, 254, 0.5)"
+                d="M0,200 C360,140 480,260 840,200 C1200,140 1320,260 1440,200 L1440,320 L0,320 Z"
+                initial={{ d: "M0,200 C360,140 480,260 840,200 C1200,140 1320,260 1440,200 L1440,320 L0,320 Z" }}
+                animate={{ 
+                  d: [
+                    "M0,200 C360,140 480,260 840,200 C1200,140 1320,260 1440,200 L1440,320 L0,320 Z",
+                    "M0,220 C360,160 480,280 840,220 C1200,160 1320,280 1440,220 L1440,320 L0,320 Z",
+                    "M0,200 C360,140 480,260 840,200 C1200,140 1320,260 1440,200 L1440,320 L0,320 Z"
+                  ]
+                }}
+                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              />
+            </svg>
+          </motion.div>
+
+          {/* Wave Layer 3 - Orange */}
+          <motion.div
+            className="absolute bottom-0 left-0 w-full h-1/2"
+          >
+            <svg className="absolute bottom-0 left-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <motion.path
+                fill="rgba(254, 215, 170, 0.4)"
+                d="M0,240 C400,180 500,300 900,240 C1300,180 1400,300 1440,240 L1440,320 L0,320 Z"
+                initial={{ d: "M0,240 C400,180 500,300 900,240 C1300,180 1400,300 1440,240 L1440,320 L0,320 Z" }}
+                animate={{ 
+                  d: [
+                    "M0,240 C400,180 500,300 900,240 C1300,180 1400,300 1440,240 L1440,320 L0,320 Z",
+                    "M0,250 C400,190 500,310 900,250 C1300,190 1400,310 1440,250 L1440,320 L0,320 Z",
+                    "M0,240 C400,180 500,300 900,240 C1300,180 1400,300 1440,240 L1440,320 L0,320 Z"
+                  ]
+                }}
+                transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+              />
+            </svg>
+          </motion.div>
+
+          {/* Wave Layer 4 - Pink */}
+          <motion.div
+            className="absolute bottom-0 left-0 w-full h-1/2"
+          >
+            <svg className="absolute bottom-0 left-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <motion.path
+                fill="rgba(251, 207, 232, 0.3)"
+                d="M0,270 C380,230 520,290 960,270 C1400,250 1440,310 1440,290 L1440,320 L0,320 Z"
+                initial={{ d: "M0,270 C380,230 520,290 960,270 C1400,250 1440,310 1440,290 L1440,320 L0,320 Z" }}
+                animate={{ 
+                  d: [
+                    "M0,270 C380,230 520,290 960,270 C1400,250 1440,310 1440,290 L1440,320 L0,320 Z",
+                    "M0,280 C380,240 520,300 960,280 C1400,260 1440,320 1440,300 L1440,320 L0,320 Z",
+                    "M0,270 C380,230 520,290 960,270 C1400,250 1440,310 1440,290 L1440,320 L0,320 Z"
+                  ]
+                }}
+                transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+              />
+            </svg>
+          </motion.div>
+        </div>
+
         {/* Interactive Particles Background */}
         <div className="absolute inset-0 -z-10 pointer-events-none" aria-hidden="true">
           {/* Generate 60 particles */}
