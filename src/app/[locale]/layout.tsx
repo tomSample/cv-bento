@@ -23,20 +23,20 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Jean Dupont - Creative Developer & Designer",
-    template: "%s | Jean Dupont"
+    default: "Thomas Grandjean - Creative Developer & Designer",
+    template: "%s | Thomas Grandjean"
   },
-  description: "Portfolio de Jean Dupont - Développeur créatif & Designer spécialisé en React, Next.js, et technologies web modernes. Plus de 5 ans d'expérience en développement frontend et full-stack.",
-  keywords: ["React", "Next.js", "TypeScript", "Developer", "Designer", "Frontend", "Full-Stack", "Web Development", "Portfolio", "Jean Dupont"],
-  authors: [{ name: "Jean Dupont" }],
-  creator: "Jean Dupont",
-  publisher: "Jean Dupont",
+  description: "Portfolio de Thomas Grandjean - Développeur créatif & Designer spécialisé en React, Next.js, et technologies web modernes. Plus de 5 ans d'expérience en développement frontend et full-stack.",
+  keywords: ["React", "Next.js", "TypeScript", "Developer", "Designer", "Frontend", "Full-Stack", "Web Development", "Portfolio", "Thomas Grandjean"],
+  authors: [{ name: "Thomas Grandjean" }],
+  creator: "Thomas Grandjean",
+  publisher: "Thomas Grandjean",
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://jeandupont.dev'), // À remplacer par votre domaine
+  metadataBase: new URL('https://thomasgrandjean.dev'), // À remplacer par votre domaine
   alternates: {
     canonical: '/',
     languages: {
@@ -45,10 +45,10 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Jean Dupont - Creative Developer & Designer",
-    description: "Portfolio de Jean Dupont - Développeur créatif spécialisé en React, Next.js, et technologies web modernes",
-    url: 'https://jeandupont.dev',
-    siteName: 'Jean Dupont Portfolio',
+    title: "Thomas Grandjean - Creative Developer & Designer",
+    description: "Portfolio de Thomas Grandjean - Développeur créatif spécialisé en React, Next.js, et technologies web modernes",
+    url: 'https://thomasgrandjean.dev',
+    siteName: 'Thomas Grandjean Portfolio',
     locale: 'fr_FR',
     type: 'website',
     images: [
@@ -56,16 +56,16 @@ export const metadata: Metadata = {
         url: '/og-image.jpg', // À créer
         width: 1200,
         height: 630,
-        alt: 'Jean Dupont - Creative Developer Portfolio',
+        alt: 'Thomas Grandjean - Creative Developer Portfolio',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Jean Dupont - Creative Developer & Designer",
-    description: "Portfolio de Jean Dupont - Développeur créatif spécialisé en React, Next.js",
+    title: "Thomas Grandjean - Creative Developer & Designer",
+    description: "Portfolio de Thomas Grandjean - Développeur créatif spécialisé en React, Next.js",
     images: ['/og-image.jpg'],
-    creator: '@jeandupont', // À remplacer
+    creator: '@thomasgrandjean', // À remplacer
   },
   robots: {
     index: true,
@@ -121,12 +121,12 @@ export default async function LocaleLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'Person',
-              name: 'Jean Dupont',
+              name: 'Thomas Grandjean',
               jobTitle: 'Creative Developer & Designer',
-              url: 'https://jeandupont.dev',
+              url: 'https://thomasgrandjean.dev',
               sameAs: [
-                'https://github.com/jeandupont',
-                'https://linkedin.com/in/jeandupont',
+                'https://github.com/thomasgrandjean',
+                'https://linkedin.com/in/thomasgrandjean',
               ],
               knowsAbout: ['React', 'Next.js', 'TypeScript', 'Web Development', 'UI/UX Design'],
               alumniOf: {

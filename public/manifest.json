@@ -1,7 +1,7 @@
 {
-  "name": "Jean Dupont - Portfolio",
-  "short_name": "JD Portfolio",
-  "description": "Portfolio de Jean Dupont - Développeur créatif spécialisé en React, Next.js, et technologies web modernes",
+  "name": "Thomas Grandjean - Portfolio",
+  "short_name": "TG Portfolio",
+  "description": "Portfolio de Thomas Grandjean - Développeur créatif spécialisé en React, Next.js, et technologies web modernes",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
