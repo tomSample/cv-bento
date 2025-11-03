@@ -189,51 +189,34 @@ export function MinimalPortfolio() {
           transition={{ duration: 0.8 }}
           className="max-w-6xl w-full relative z-10"
         >
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-8 mb-6 md:mb-8">
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative w-20 h-20 md:w-32 md:h-32"
-            >
-              <div className="w-full h-full rounded-full bg-gradient-to-br from-gray-200 via-gray-300 to-gray-400 flex items-center justify-center text-3xl md:text-5xl font-bold text-gray-600">
-                JD
-              </div>
-              <div className="absolute inset-0 rounded-full border-2 border-black/10"></div>
-            </motion.div>
-          </div>
-          
           <motion.h1 
             style={{ y: smoothY, scale: heroScale }}
-            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold mb-6 md:mb-8 leading-[0.9] tracking-[-0.02em]"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold mb-8 md:mb-12 leading-[0.9] tracking-[-0.02em]"
           >
             <span className="text-blue-600">{t('hero.name').split(' ')[0]}</span>
             {' '}
             <span className="text-black">{t('hero.name').split(' ').slice(1).join(' ')}</span>
           </motion.h1>
           
-          <p className="text-lg sm:text-xl md:text-3xl lg:text-4xl text-gray-600 mb-8 md:mb-12 max-w-3xl leading-[1.4] font-light">
+          <p className="text-sm sm:text-base md:text-xl lg:text-2xl xl:text-3xl text-gray-600 mb-12 md:mb-16 lg:mb-20 max-w-5xl mx-auto text-center leading-tight font-light">
             {t('hero.title')}
           </p>
           
-          <div className="flex flex-wrap items-center gap-6">
-            <motion.button
-              onClick={() => scrollToSection('contact')}
-              whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
-              whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
-              className="px-8 py-4 min-h-[44px] bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20 hover:shadow-xl hover:shadow-blue-600/30 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:outline-none inline-flex items-center gap-2 cursor-pointer"
-              aria-label="Naviguer vers la section contact pour m'embaucher"
-            >
-              {t('hero.cta.hire')}
-              <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
-            </motion.button>
-            
+          <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-end gap-4 sm:gap-6">
             <button
               onClick={() => scrollToSection('work')}
-              className="minimal-underline text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors min-h-[44px] inline-flex items-center cursor-pointer"
+              className="minimal-underline text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors min-h-[44px] inline-flex items-center cursor-pointer order-2 sm:order-1"
               aria-label="Naviguer vers la section expérience"
             >
               {t('hero.cta.work')}
+            </button>
+            
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="minimal-underline-primary text-blue-600 hover:text-blue-700 font-semibold text-base transition-colors min-h-[44px] inline-flex items-center cursor-pointer order-1 sm:order-2"
+              aria-label="Naviguer vers la section contact pour me contacter"
+            >
+              {t('hero.cta.hire')}
             </button>
           </div>
         </motion.div>
@@ -333,6 +316,16 @@ export function MinimalPortfolio() {
               const maxYear = Math.max(...allYears);
               const yearRange = maxYear - minYear || 1;
               
+              // Palette de couleurs pour différencier chaque expérience
+              const experienceColors = [
+                { border: 'border-l-blue-500', bg: 'bg-blue-50' },
+                { border: 'border-l-emerald-500', bg: 'bg-emerald-50' },
+                { border: 'border-l-violet-500', bg: 'bg-violet-50' },
+                { border: 'border-l-orange-500', bg: 'bg-orange-50' },
+                { border: 'border-l-pink-500', bg: 'bg-pink-50' },
+              ];
+              const experienceColor = experienceColors[jobIndex % experienceColors.length];
+              
               return (
                 <motion.div
                   key={jobIndex}
@@ -340,7 +333,7 @@ export function MinimalPortfolio() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: jobIndex * 0.1 }}
                   viewport={{ once: true }}
-                  className="bg-white md:bg-gray-50 rounded-2xl p-6 md:p-8 border-2 border-gray-100"
+                  className={`bg-white md:bg-gray-50 rounded-2xl p-6 md:p-8 border-2 border-gray-100 border-l-[6px] ${experienceColor.border}`}
                 >
                   {/* Company Header */}
                   <div className="mb-6">
@@ -389,10 +382,10 @@ export function MinimalPortfolio() {
                               <div key={roleIndex} className="space-y-2">
                                 <button
                                   onClick={() => toggleRole(jobIndex, roleIndex)}
-                                  className="w-full flex items-center gap-3 cursor-pointer group"
+                                  className="w-full flex items-center gap-4 cursor-pointer group"
                                 >
-                                  <div className="w-32 flex-shrink-0">
-                                    <div className={`text-xs font-bold text-gray-700 truncate transition-all px-2 py-1 rounded-md ${colorScheme.hoverBg} group-hover:text-white`} title={role.title}>
+                                  <div className="w-72 flex-shrink-0">
+                                    <div className={`text-sm font-bold text-gray-900 transition-all px-3 py-1.5 rounded-md ${colorScheme.hoverBg} group-hover:text-white text-left`} title={role.title}>
                                       {role.title}
                                     </div>
                                   </div>
@@ -421,7 +414,7 @@ export function MinimalPortfolio() {
                                       transition={{ duration: 0.3, ease: 'easeInOut' }}
                                       className="overflow-hidden"
                                     >
-                                      <div className={`ml-[8.5rem] bg-white border-2 ${colorScheme.border} rounded-xl p-5 mt-2`}>
+                                      <div className={`ml-[19rem] bg-white border-2 ${colorScheme.border} rounded-xl p-5 mt-2`}>
                                         <div className="flex items-start justify-between gap-3 mb-3">
                                           <h4 className="text-lg font-bold text-gray-900 flex-1">{role.title}</h4>
                                           <span className={`${colorScheme.dateBg} ${colorScheme.text} px-2.5 py-1 rounded-md text-xs font-semibold whitespace-nowrap`}>
@@ -596,19 +589,15 @@ export function MinimalPortfolio() {
               const Icon = colorScheme.icon;
               
               return (
-                <motion.a
+                <motion.div
                   key={idx}
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: prefersReducedMotion ? 0 : 0.4, delay: prefersReducedMotion ? 0 : idx * 0.1 }}
                   viewport={{ once: true }}
-                  className={`group bg-white border-2 ${colorScheme.border} rounded-2xl p-6 transition-all cursor-pointer`}
-                  aria-label={`Voir le projet ${project.title}`}
+                  className={`bg-white border-2 ${colorScheme.border} rounded-2xl p-6`}
                 >
-                  <div className={`w-12 h-12 ${colorScheme.bgLight} rounded-xl flex items-center justify-center mb-4 ${colorScheme.bg} group-hover:scale-110 transition-transform`}>
+                  <div className={`w-12 h-12 ${colorScheme.bgLight} rounded-xl flex items-center justify-center mb-4 ${colorScheme.bg}`}>
                     <Icon className={`w-6 h-6 text-white`} aria-hidden="true" />
                   </div>
                   
@@ -625,9 +614,7 @@ export function MinimalPortfolio() {
                       </span>
                     ))}
                   </div>
-                  
-                  <ArrowUpRight className={`w-5 h-5 ${colorScheme.text} mt-4 opacity-0 group-hover:opacity-100 transition-opacity`} aria-hidden="true" />
-                </motion.a>
+                </motion.div>
               );
             })}
           </div>

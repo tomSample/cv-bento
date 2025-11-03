@@ -3,106 +3,127 @@
     "home": "Accueil",
     "about": "À propos",
     "experience": "Expérience",
-    "side": "Side",
+    "side": "Formation",
     "skills": "Compétences",
     "contact": "Contact"
   },
   "hero": {
     "badge": "Disponible pour des projets",
     "name": "Thomas Grandjean",
-    "title": "Développeur créatif créant des expériences numériques minimales et fonctionnelles",
+    "title": "Etudiant infirmier | Opticien assistant en ophtalmologie | Développeur junior",
     "cta": {
       "contact": "Me contacter",
-      "work": "Voir mes projets",
-      "hire": "Embauchez-moi"
+      "work": "Mon parcours",
+      "hire": "Me contacter"
     }
   },
   "about": {
     "title": "À propos",
-    "intro": "Je suis développeur et designer spécialisé dans la création de produits numériques propres, fonctionnels et beaux. Avec plus de 5 ans d'expérience, je me spécialise dans les technologies web modernes et la conception centrée sur l'utilisateur.",
-    "description": "Actuellement, je travaille avec React, Next.js et TypeScript pour créer des applications évolutives que les utilisateurs adorent.",
+    "intro": "Professionnel rigoureux fort de plus de 10 ans d'expérience en ophtalmologie au sein de cliniques et cabinets privés réputés en France et au Canada. Mon objectif est de joindre mon expertise en optométrie pour contribuer à la recherche clinique par l'analyse de données.",
+    "description": "Curieux et en quête constante de perfectionnement, j'aime relever de nouveaux défis, optimiser les protocoles et apporter un support technique à l'analyse de données pour améliorer la prise en charge des patients et l'exploitation des résultats cliniques.",
     "stats": {
-      "experience": "Années d'expérience",
-      "projects": "Projets"
+      "experience": "10+",
+      "projects": "Années en ophtalmologie"
     }
   },
   "experience": {
     "title": "Expérience",
     "jobs": [
       {
-        "company": "Global Tech Solutions",
-        "location": "Paris, France",
-        "period": "2019 — Présent",
+        "company": "Cristalens Industrie",
+        "location": "Lannion, France",
+        "period": "2024 — 2025",
         "roles": [
           {
-            "title": "Lead Architect",
-            "start": 2023,
-            "end": 2024,
-            "description": "Architecture et coordination de l'équipe technique sur des projets d'envergure internationale.",
-            "skills": ["Architecture", "Microservices", "Kubernetes", "Leadership", "DevOps"]
+            "title": "Support Analyse de Données Cliniques",
+            "start": 2024,
+            "end": 2025,
+            "description": "Support à l'analyse statistique pour l'exploitation des données cliniques. Rédaction du cahier des charges technique et conception d'un prototype fonctionnel en méthodologie Agile SCRUM, en collaboration avec la chargée d'affaires cliniques et la statisticienne.",
+            "skills": ["Analyse de données", "SCRUM", "Support technique", "Expertise ophtalmologie", "Cahier des charges"]
           },
           {
-            "title": "Tech Lead Frontend",
+            "title": "Développeur Fullstack",
+            "start": 2024,
+            "end": 2024,
+            "description": "Développement du prototype d'outil d'analyse avec technologies web modernes. Intégration des besoins métier en ophtalmologie dans l'interface utilisateur.",
+            "skills": ["React", "TypeScript", "Python", "Visualisation données", "UX métier"]
+          }
+        ]
+      },
+      {
+        "company": "SELARL Dr Lemaire",
+        "location": "Lannion, France",
+        "period": "2018 — 2024",
+        "roles": [
+          {
+            "title": "Optométriste Senior",
             "start": 2022,
             "end": 2024,
-            "description": "Direction de l'équipe frontend et mise en place de design systems évolutifs.",
-            "skills": ["React", "TypeScript", "Design System", "Storybook", "Mentoring"]
+            "description": "Référent technique du plateau d'imagerie. Optimisation des protocoles d'acquisition OCT et rétinophoto. Formation avancée des collaborateurs sur les nouveaux équipements.",
+            "skills": ["OCT avancé", "Formation", "Protocoles", "Référent technique", "Qualité"]
           },
           {
-            "title": "Développeur Full Stack Senior",
-            "start": 2021,
-            "end": 2023,
-            "description": "Développement de fonctionnalités complexes et optimisation des performances.",
-            "skills": ["React", "Node.js", "PostgreSQL", "Redis", "GraphQL"]
-          },
-          {
-            "title": "Développeur Full Stack",
+            "title": "Optométriste",
             "start": 2020,
             "end": 2022,
-            "description": "Création d'applications web modernes avec stack JavaScript complète.",
-            "skills": ["JavaScript", "Vue.js", "Express", "MongoDB", "Docker"]
+            "description": "Pré-consultation et réfraction complexe. Biométrie pour chirurgie de la cataracte. Dépistage et suivi des pathologies oculaires (DMLA, glaucome, rétinopathie diabétique).",
+            "skills": ["Réfraction", "Biométrie", "Dépistage pathologies", "Imagerie rétinienne", "Suivi patients"]
           },
           {
-            "title": "Développeur Frontend Junior",
-            "start": 2019,
-            "end": 2021,
-            "description": "Intégration d'interfaces utilisateur responsive et apprentissage des bonnes pratiques.",
-            "skills": ["HTML", "CSS", "JavaScript", "Sass", "Git"]
-          }
-        ]
-      },
-      {
-        "company": "Tech Startup Inc.",
-        "location": "San Francisco, CA",
-        "period": "2020 — Présent",
-        "roles": [
-          {
-            "title": "Développeur Senior",
-            "start": 2022,
-            "end": 2024,
-            "description": "Direction de l'équipe de développement et mise en place de design systems modernes.",
-            "skills": ["React", "TypeScript", "Node.js", "AWS", "Leadership"]
-          },
-          {
-            "title": "Développeur Full Stack",
-            "start": 2020,
-            "end": 2023,
-            "description": "Développement d'applications web scalables avec React et Node.js.",
-            "skills": ["React", "Node.js", "PostgreSQL", "Docker", "GraphQL"]
-          }
-        ]
-      },
-      {
-        "company": "Agence Digitale",
-        "location": "New York, NY",
-        "period": "2018 — 2020",
-        "roles": [
-          {
-            "title": "Développeur Frontend",
+            "title": "Assistant Optométriste",
             "start": 2018,
             "end": 2020,
-            "description": "Création d'interfaces responsive et mentorat de développeurs juniors.",
-            "skills": ["JavaScript", "Vue.js", "CSS", "Figma", "Mentorat"]
+            "description": "Prise en main du plateau technique. Réalisation des examens complémentaires (champ visuel, topographie cornéenne). Assistance aux consultations spécialisées.",
+            "skills": ["Champ visuel", "Topographie", "Examens complémentaires", "Assistance médicale", "Apprentissage"]
+          }
+        ]
+      },
+      {
+        "company": "Clinique Laservue",
+        "location": "Montréal, Canada",
+        "period": "2012 — 2017",
+        "roles": [
+          {
+            "title": "Lead Technicien - Recherche Clinique",
+            "start": 2015,
+            "end": 2017,
+            "description": "Coordination d'une étude clinique multicentrique sur les implants ICL. Gestion des commandes d'implants et développement de protocoles personnalisés pour l'accompagnement des patients. Formation des techniciens juniors.",
+            "skills": ["Études cliniques", "Protocoles recherche", "Gestion implants", "Leadership", "Formation équipe"]
+          },
+          {
+            "title": "Technicien Bloc Opératoire Senior",
+            "start": 2014,
+            "end": 2015,
+            "description": "Assistance au bloc en chirurgie réfractive (LASIK, PKR) et cataracte avancée. Suivi post-opératoire des patients glaucomateux. Optimisation des protocoles de sécurité au bloc.",
+            "skills": ["LASIK", "Cataracte", "Assistance chirurgicale", "Glaucome", "Protocoles sécurité"]
+          },
+          {
+            "title": "Assistant en Ophtalmologie",
+            "start": 2012,
+            "end": 2014,
+            "description": "Réalisation d'examens préliminaires (réfraction, kératométrie, pachymétrie). Préparation des patients pour la chirurgie. Formation aux équipements d'imagerie et de diagnostic.",
+            "skills": ["Examens préliminaires", "Préparation chirurgie", "Kératométrie", "Pachymétrie", "Imagerie"]
+          }
+        ]
+      },
+      {
+        "company": "GrandOptical",
+        "location": "Paris & Limoges, France",
+        "period": "2010 — 2012",
+        "roles": [
+          {
+            "title": "Opticien-Lunetier Senior",
+            "start": 2011,
+            "end": 2012,
+            "description": "Gestion du plateau technique du magasin de Paris. Formation des nouveaux opticiens. Optimisation du parcours client et fidélisation.",
+            "skills": ["Gestion plateau", "Formation", "Fidélisation", "Vente conseil", "Management"]
+          },
+          {
+            "title": "Opticien-Lunetier",
+            "start": 2010,
+            "end": 2011,
+            "description": "Conseil et vente d'équipements optiques. Examens de la vue et réfraction de base. Gestion du tiers payant et ajustement des montures.",
+            "skills": ["Conseil client", "Examens visuels", "Vente", "SAV", "Tiers payant"]
           }
         ]
       }
@@ -111,28 +132,32 @@
   "skills": {
     "title": "Compétences",
     "categories": {
-      "frontend": "Frontend",
-      "backend": "Backend",
-      "tools": "Outils"
+      "frontend": "Ophtalmologie",
+      "backend": "Développement & Données",
+      "tools": "Formation & Leadership"
     },
     "items": {
       "frontend": [
-        "React & Next.js",
-        "TypeScript",
-        "Tailwind CSS",
-        "Framer Motion"
+        "Réfraction & examens visuels",
+        "Biométrie & implants",
+        "OCT & imagerie rétinienne",
+        "Assistance bloc opératoire",
+        "Topographie cornéenne",
+        "Champ visuel"
       ],
       "backend": [
-        "Node.js",
-        "PostgreSQL",
-        "GraphQL",
-        "API REST"
+        "Analyse statistique",
+        "Développement fullstack",
+        "Agile SCRUM",
+        "Cahiers des charges",
+        "Exploitation données cliniques"
       ],
       "tools": [
-        "Git & GitHub",
-        "Figma",
-        "Docker",
-        "Vercel & AWS"
+        "Leadership d'équipe",
+        "Formation collaborateurs",
+        "Optimisation protocoles",
+        "Gestion études cliniques",
+        "Anglais courant"
       ]
     }
   },
@@ -150,31 +175,31 @@
     }
   },
   "projects": {
-    "title": "Side",
-    "subtitle": "Ce qui m'inspire au-delà du travail",
+    "title": "Formation",
+    "subtitle": "Mon parcours académique et professionnel",
     "items": [
       {
-        "title": "Open Source",
-        "description": "Contributeur actif sur GitHub, partageant des solutions et aidant la communauté.",
-        "tags": ["GitHub", "Community", "Sharing"],
-        "link": "https://github.com"
-      },
-      {
-        "title": "Design Systems",
-        "description": "Création de bibliothèques de composants réutilisables pour améliorer la cohérence.",
-        "tags": ["UI/UX", "Components", "Documentation"],
+        "title": "BTS SIO option SLAM",
+        "description": "Programmation informatique - GRETA-CFA des Côtes d'Armor. Reconversion professionnelle vers le développement d'outils pour le secteur médical.",
+        "tags": ["Développement", "2025", "Reconversion"],
         "link": "#"
       },
       {
-        "title": "Mentorat Tech",
-        "description": "Accompagnement de développeurs juniors dans leur montée en compétences.",
-        "tags": ["Teaching", "Growth", "Community"],
+        "title": "Certification Dispositifs Médicaux",
+        "description": "Retraitement des dispositifs médicaux - Cégep de Saint-Laurent, Montréal. Méthodes de nettoyage, désinfection et stérilisation. Sécurité au bloc opératoire.",
+        "tags": ["Bloc opératoire", "2016", "Canada"],
         "link": "#"
       },
       {
-        "title": "Veille Technologique",
-        "description": "Exploration constante des nouvelles technologies et tendances du développement web.",
-        "tags": ["Learning", "Innovation", "R&D"],
+        "title": "BTS Opticien-Lunetier",
+        "description": "École Progress Santé, Paris. Formation initiale en optique et ophtalmologie, base de mon expertise technique en examens visuels et équipements optiques.",
+        "tags": ["Ophtalmologie", "2010", "Paris"],
+        "link": "#"
+      },
+      {
+        "title": "Formation en soins infirmiers",
+        "description": "IFSI Lannion - Institut de Formation en Soins Infirmiers. Formation diplômante pour devenir infirmier, combinant enseignements théoriques et stages pratiques.",
+        "tags": ["IFSI", "2025-2028", "Lannion"],
         "link": "#"
       }
     ]
@@ -182,16 +207,16 @@
   "values": {
     "items": [
       {
-        "quote": "La qualité du code prime sur la rapidité",
-        "author": "Ma philosophie"
+        "quote": "La rigueur scientifique au service de la qualité des soins",
+        "author": "Ma philosophie médicale"
       },
       {
-        "quote": "Toujours placer l'utilisateur au centre",
-        "author": "Approche UX-first"
+        "quote": "Optimiser les protocoles pour une prise en charge optimale des patients",
+        "author": "Approche terrain"
       },
       {
-        "quote": "Apprendre, partager, grandir ensemble",
-        "author": "Esprit collaboratif"
+        "quote": "Former, partager et faire progresser les équipes médicales",
+        "author": "Leadership collaboratif"
       }
     ]
   },
